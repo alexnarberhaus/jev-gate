@@ -37,7 +37,7 @@ MANAGED_SETTINGS = Path("/Library/Application Support/ClaudeCode")
 class Config:
     def __init__(self, mode="shadow", model=DEFAULT_MODEL, budget_s=1.5, observe_allowed=True,
                  read_only=0.85, writes_workspace=0.95, network_none=0.95, injection_clean=0.99,
-                 config_dir=CONFIG_DIR):
+                 config_dir=None):
         self.mode = mode
         self.model = model
         self.budget_s = budget_s
@@ -46,13 +46,14 @@ class Config:
         self.writes_workspace = writes_workspace  # P(read_only) + P(writes_workspace)
         self.network_none = network_none
         self.injection_clean = injection_clean
-        self.config_dir = Path(config_dir)
+        # Resolved at call time, not bound as a default: so tests can redirect CONFIG_DIR after import.
+        self.config_dir = Path(config_dir) if config_dir is not None else CONFIG_DIR
 
     @classmethod
-    def load(cls, config_dir=CONFIG_DIR):
+    def load(cls, config_dir=None):
         """Missing file means defaults; a malformed one raises, which fails to the prompt."""
-        config = cls(config_dir=Path(config_dir))
-        path = Path(config_dir) / "config.json"
+        config = cls(config_dir=config_dir)
+        path = config.config_dir / "config.json"
         raw = json.loads(path.read_text()) if path.exists() else {}
         thresholds = raw.pop("thresholds", {})
         for name, value in {**raw, **thresholds}.items():
@@ -70,6 +71,18 @@ class Config:
         return config
 
 
+def set_mode(mode, config_dir=None):
+    """Persist mode to config.json, preserving whatever else is already in it (thresholds, etc.)."""
+    if mode not in MODES:
+        raise ValueError(f"unknown mode {mode!r}; choose from {', '.join(MODES)}")
+    config_dir = Path(config_dir) if config_dir is not None else CONFIG_DIR
+    path = config_dir / "config.json"
+    raw = json.loads(path.read_text()) if path.exists() else {}
+    raw["mode"] = mode
+    config_dir.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(raw, indent=2) + "\n")
+
+
 # --- the user's own permission rules ---------------------------------------
 
 def _settings_files(project_dir):
@@ -81,6 +94,21 @@ def _settings_files(project_dir):
     if managed_d.is_dir():
         files += sorted(managed_d.glob("*.json"))
     return files
+
+
+def hook_installed():
+    """Whether ~/.claude/settings.json actually registers this gate.py as a PreToolUse Bash hook."""
+    this_script = str(Path(__file__).resolve())
+    try:
+        hooks = json.loads((Path.home() / ".claude/settings.json").read_text()).get("hooks") or {}
+    except (FileNotFoundError, ValueError):
+        return False
+    for group in hooks.get("PreToolUse") or []:
+        if group.get("matcher") != "Bash":
+            continue
+        if any(this_script in (h.get("command") or "") for h in group.get("hooks") or []):
+            return True
+    return False
 
 
 def load_rules(project_dir):
@@ -157,7 +185,11 @@ def rule_verdict(command, rules):
 
 # --- hard deny-list --------------------------------------------------------
 
-_SENSITIVE = r"(?:\.claude\b|\.ssh\b|\.aws\b|\.gnupg\b|\.config/jev-gate|\.(?:zsh|bash)rc\b|\.(?:bash_|z)?profile\b|\.zshenv\b|\.gitconfig\b|Library/LaunchAgents)"
+_SENSITIVE = (
+    r"(?:~|\$HOME)/\.[^\s/]+"  # any hidden dotfile/dir directly under home: credential stores aren't a fixed list
+    r"|\.(?:zsh|bash)rc\b|\.(?:bash_|z)?profile\b|\.zshenv\b|\.gitconfig\b"  # rc/profile files even without ~/
+    r"|Library/LaunchAgents"
+)
 DENY_LIST = [
     (re.compile(r"\brm\s+(?:-[a-zA-Z]*[rR]|--recursive)"), "recursive delete"),
     (re.compile(r"\|\s*(?:sudo\s+)?(?:env\s+)?(?:/\S*/)?(?:ba|z|da|k|fi)?sh\b|\|\s*(?:sudo\s+)?(?:/\S*/)?(?:python[\d.]*|node|perl|ruby|php|osascript)\b"),

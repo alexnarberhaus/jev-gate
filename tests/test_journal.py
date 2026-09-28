@@ -106,9 +106,31 @@ class FormatEntry(unittest.TestCase):
         self.assertIn("\033", journal.format_entry(entry(), color=True))
 
     def test_long_commands_are_truncated(self):
-        out = journal.format_entry(entry(command="x" * 300), color=False)
+        out = journal.format_entry(entry(command="x" * 300), color=False, width=100)
         self.assertIn("…", out)
         self.assertLessEqual(len(out.splitlines()[0]), 160)
+
+    def test_timestamp_is_right_aligned_to_width(self):
+        out = journal.format_entry(entry(), color=False, width=60)
+        head = out.splitlines()[0]
+        self.assertTrue(head.endswith("12:00:00"))
+        self.assertEqual(len(head), 59)  # width - 1: one space of breathing room before the ts
+
+    def test_reason_and_meta_share_one_detail_line(self):
+        out = journal.format_entry(entry(), color=False, width=100)
+        lines = out.splitlines()
+        self.assertEqual(len(lines), 2)  # head + one detail line
+        self.assertIn("read-only (read-only 1.00)", lines[1])
+        self.assertIn("637 ms", lines[1])
+
+    def test_meta_is_colored_separately_from_the_reason(self):
+        out = journal.format_entry(entry(), color=True, width=100)
+        self.assertIn(f"{journal._DIM}read-only (read-only 1.00){journal._RESET}", out)
+        self.assertIn(f"{journal._META}637 ms{journal._RESET}", out)
+
+    def test_no_detail_line_when_nothing_to_show(self):
+        out = journal.format_entry(entry(reason="", latency_ms=None, cost_usd=None, observed=False), color=False)
+        self.assertEqual(len(out.splitlines()), 1)
 
     def test_missing_fields_render_without_crashing(self):
         journal.format_entry({}, color=False)
@@ -127,6 +149,42 @@ class Main(unittest.TestCase):
             self.assertEqual(code, 0)
             self.assertIn("git status", out.getvalue())
             self.assertIn("ls", out.getvalue())  # the malformed line in between is skipped, not fatal
+
+
+class Watch(unittest.TestCase):
+    def test_on_start_runs_before_any_backlog_is_printed(self):
+        import io
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "decisions.jsonl"
+            p.write_text(json.dumps(entry(command="old one")) + "\n")
+            out = io.StringIO()
+            with mock.patch("sys.stdout", out), mock.patch.object(journal, "follow", lambda t: iter([])):
+                journal.watch(n=5, follow_after=True, color=False, target=p,
+                              on_start=lambda: print("BANNER-MARK"))
+            text = out.getvalue()
+            self.assertLess(text.index("BANNER-MARK"), text.index("old one"))
+
+    def test_no_follow_never_calls_on_start(self):
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "decisions.jsonl"
+            p.write_text(json.dumps(entry()) + "\n")
+            banner = mock.Mock()
+            with mock.patch("builtins.print"):
+                journal.watch(n=5, follow_after=False, color=False, target=p, on_start=banner)
+            banner.assert_not_called()
+
+    def test_default_n_zero_shows_nothing_before_following(self):
+        import io
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "decisions.jsonl"
+            p.write_text(json.dumps(entry(command="should not appear")) + "\n")
+            out = io.StringIO()
+            with mock.patch("sys.stdout", out), mock.patch.object(journal, "follow", lambda t: iter([])):
+                journal.watch(n=0, follow_after=True, color=False, target=p)
+            self.assertNotIn("should not appear", out.getvalue())
 
 
 if __name__ == "__main__":

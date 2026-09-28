@@ -1,0 +1,305 @@
+#!/usr/bin/env python3
+"""jev-gate — the command-line front door.
+
+    jev-gate                watch decisions live (default)
+    jev-gate watch [opts]    same, spelled out
+
+This script is intentionally thin: journal.py owns the log and the watch
+loop, gate.py owns the policy and config. This just ties them together for
+a nicer terminal experience and gives the project one memorable command.
+"""
+
+import argparse
+import json
+import os
+import random
+import signal
+import sys
+import threading
+import time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gate  # noqa: E402
+import journal  # noqa: E402
+from judge import load_key  # noqa: E402
+
+BOLD, CYAN, DIM, GREEN, RED, RESET = "\033[1m", "\033[1;36m", "\033[2m", "\033[1;32m", "\033[1;31m", "\033[0m"
+TITLE = "JEV-GATE"
+
+MODE_BLURB = {
+    "shadow": "observing only — nothing is auto-approved yet",
+    "explain": "annotating prompts with Jev's read — still never auto-approves",
+    "auto": "auto-approving calls Jev is confident are harmless",
+}
+
+# A tiny 5-row block font — just enough letters to spell TITLE. '#' = lit pixel.
+_FONT = {
+    "J": ["   ##", "    #", "    #", "#   #", " ### "],
+    "E": ["#####", "#    ", "###  ", "#    ", "#####"],
+    "V": ["#   #", "#   #", " # # ", " # # ", "  #  "],
+    "-": ["     ", "     ", " ### ", "     ", "     "],
+    "G": [" ### ", "#    ", "#  ##", "#   #", " ### "],
+    "A": [" ### ", "#   #", "#####", "#   #", "#   #"],
+    "T": ["#####", "  #  ", "  #  ", "  #  ", "  #  "],
+}
+_GLYPH_H = 5
+_STARS = "·.*"
+
+
+def _logo_rows(text=TITLE):
+    glyphs = [_FONT.get(ch, [" " * 5] * _GLYPH_H) for ch in text]
+    return [" ".join(g[r] for g in glyphs) for r in range(_GLYPH_H)]
+
+
+def animate_logo(enabled=True, color=True, frames=18, delay=0.03, rng=random):
+    """Big block letters resolving out of a twinkling starfield, left to right.
+
+    Disabled (no tty, --no-animation, --no-color): prints the same logo, fully formed, no motion.
+    """
+    rows = _logo_rows()
+    width, height = len(rows[0]), len(rows)
+
+    def render(frame, final):
+        lit = f"{BOLD}{CYAN}█{RESET}" if color else "#"
+        star_color = DIM if color else ""
+        settle_at = [c * frames / width + 4 for c in range(width)]
+        lines = []
+        for row in rows:
+            chars = []
+            for c, cell in enumerate(row):
+                if cell == "#" and (final or frame >= settle_at[c]):
+                    chars.append(lit)
+                elif not final and rng.random() < 0.06:
+                    chars.append(f"{star_color}{rng.choice(_STARS)}{RESET if color else ''}")
+                else:
+                    chars.append(" ")
+            lines.append("".join(chars))
+        return lines
+
+    if not enabled:
+        for line in render(frames, final=True):
+            print(f"  {line}")
+        return
+
+    for frame in range(frames + 1):
+        lines = render(frame, final=(frame == frames))
+        if frame == 0:
+            sys.stdout.write("\n".join(f"  {l}" for l in lines) + "\n")
+        else:
+            sys.stdout.write(f"\033[{height}A")
+            for line in lines:
+                sys.stdout.write(f"\r\033[2K  {line}\n")
+        sys.stdout.flush()
+        time.sleep(delay)
+
+
+def print_banner(color, animate=True, hotkeys=False):
+    try:
+        mode = gate.Config.load().mode
+    except (ValueError, OSError):
+        mode = "?"
+    blurb = MODE_BLURB.get(mode, "unknown mode — check ~/.config/jev-gate/config.json")
+    log = journal.path()
+    print()
+    animate_logo(enabled=animate and sys.stdout.isatty(), color=color)
+    print()
+    stop_hint = "[q]uit or Ctrl+C to stop" if hotkeys else "Ctrl+C to stop"
+    if color:
+        print(f"  {DIM}watching Bash calls{RESET}\n"
+              f"  {DIM}mode{RESET}  {BOLD}{mode}{RESET}  {DIM}({blurb}){RESET}\n"
+              f"  {DIM}log{RESET}   {DIM}{log}{RESET}\n\n"
+              f"  {DIM}{stop_hint}{RESET}\n")
+        if hotkeys:
+            print(f"  {DIM}[s]hadow  [e]xplain  [a]uto{RESET}\n")
+    else:
+        print(f"  watching Bash calls\n  mode: {mode} ({blurb})\n  log:  {log}\n\n  {stop_hint}\n")
+        if hotkeys:
+            print("  [s]hadow  [e]xplain  [a]uto\n")
+
+
+# --- mode hotkeys: one keypress, no Enter, while watch is following live -------------------
+
+_HOTKEY_MODES = {"s": "shadow", "e": "explain", "a": "auto"}
+
+
+def handle_key(ch, config_dir, color):
+    """React to one keypress. Returns a line to print, "QUIT", or None to ignore it.
+
+    Pure enough to test: the only side effect is gate.set_mode, and that's the point.
+    """
+    if ch in _HOTKEY_MODES:
+        mode = _HOTKEY_MODES[ch]
+        gate.set_mode(mode, config_dir=config_dir)
+        blurb = MODE_BLURB.get(mode, "")
+        if color:
+            return f"{GREEN}✓{RESET} mode set to {BOLD}{mode}{RESET}  {DIM}({blurb}){RESET}"
+        return f"mode set to {mode} ({blurb})"
+    if ch in ("q", "Q"):
+        return "QUIT"
+    return None
+
+
+def start_hotkeys(config_dir, color):
+    """Read one key at a time, react, print, restore the terminal on the way out.
+
+    A no-op (returns None) when stdin isn't a real terminal — piping input or output
+    disables it automatically, same as the animation and color already do.
+    """
+    if not sys.stdin.isatty():
+        return None
+    import termios
+    import tty
+
+    fd = sys.stdin.fileno()
+    old = termios.tcgetattr(fd)
+    tty.setcbreak(fd)  # unlike raw mode, cbreak leaves Ctrl+C's SIGINT working normally
+    quiet = termios.tcgetattr(fd)
+    quiet[3] &= ~termios.ECHO  # cbreak still echoes by default; keypresses shouldn't clutter the log
+    termios.tcsetattr(fd, termios.TCSADRAIN, quiet)
+    restored = threading.Event()
+
+    def restore():
+        if not restored.is_set():
+            restored.set()
+            termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+    def loop():
+        try:
+            while not restored.is_set():
+                ch = sys.stdin.read(1)
+                if not ch:
+                    break
+                result = handle_key(ch, config_dir, color)
+                if result == "QUIT":
+                    os.kill(os.getpid(), signal.SIGINT)
+                    break
+                if result:
+                    print(f"\n{result}\n")
+        except Exception:
+            pass  # a broken hotkey listener must never take the whole viewer down with it
+        finally:
+            restore()
+
+    threading.Thread(target=loop, daemon=True).start()
+    return restore
+
+
+def cmd_watch(args):
+    color = sys.stdout.isatty() and not args.no_color
+    # Live mode defaults to showing nothing but what happens from here on. A one-shot dump
+    # (--no-follow) has no "from here on" to show, so it falls back to a useful backlog.
+    n = args.lines if args.lines is not None else (0 if not args.no_follow else 20)
+    following = not args.no_follow
+    hotkeys_enabled = following and sys.stdin.isatty()
+    restore_box = []  # on_start runs on the main thread; this is how it hands `restore` back out
+
+    def on_start():
+        print_banner(color, animate=not args.no_animation, hotkeys=hotkeys_enabled)
+        # Only start reading keys once the banner has fully, synchronously finished printing —
+        # starting it any earlier lets a keypress's own print race the animation's cursor math.
+        if hotkeys_enabled:
+            restore_box.append(start_hotkeys(gate.CONFIG_DIR, color))
+
+    try:
+        journal.watch(n=n, follow_after=following, color=color, on_start=on_start if following else None)
+    finally:
+        for restore in restore_box:
+            if restore:
+                restore()
+    return 0
+
+
+def cmd_mode(args):
+    color = sys.stdout.isatty() and not args.no_color
+    dim = (DIM, RESET) if color else ("", "")
+    if args.value is None:
+        try:
+            mode = gate.Config.load().mode
+        except (ValueError, OSError) as e:
+            print(f"couldn't read config: {e}")
+            return 1
+        print(f"{mode}  {dim[0]}({MODE_BLURB.get(mode, '')}){dim[1]}")
+        return 0
+
+    gate.set_mode(args.value)  # value is already restricted to gate.MODES by argparse choices
+    blurb = MODE_BLURB.get(args.value, "")
+    mark = f"{GREEN}✓{RESET}" if color else "✓"
+    print(f"  {mark} mode set to {BOLD if color else ''}{args.value}{RESET if color else ''}  {dim[0]}({blurb}){dim[1]}")
+    if args.value == "auto":
+        print(f"  {dim[0]}heads up: this will start auto-approving calls Jev is confident are harmless.{dim[1]}")
+    return 0
+
+
+def cmd_status(args):
+    color = sys.stdout.isatty() and not args.no_color
+    ok_c, bad_c, dim_c = (GREEN, RESET) if color else ("", ""), (RED, RESET) if color else ("", ""), (DIM, RESET) if color else ("", "")
+
+    def row(label, mark, good, detail):
+        a, z = ok_c if good else bad_c
+        return f"  {label:<12}{a}{mark:<8}{z} {dim_c[0]}{detail}{dim_c[1]}"
+
+    try:
+        config = gate.Config.load()
+        config_ok, config_error = True, None
+        key_ok = bool(load_key(config.config_dir / ".env"))
+    except (ValueError, OSError) as e:
+        config, config_ok, config_error, key_ok = None, False, str(e), False
+
+    installed = gate.hook_installed()
+    count, last = journal.count_and_last(journal.path())
+    if last:
+        entry = json.loads(last)
+        last_detail = f"{entry.get('decision', '?')} · {journal.relative_time(entry.get('ts'))} · {entry.get('command', '')[:60]}"
+    else:
+        last_detail = "no decisions logged yet"
+
+    print(f"\n  {BOLD}{CYAN}JEV-GATE{RESET}  {dim_c[0]}status{dim_c[1]}\n" if color else "\n  JEV-GATE status\n")
+    print(row("hook", "yes" if installed else "no", installed,
+              "registered in ~/.claude/settings.json" if installed else "not found — see CLAUDE.md to add it"))
+    print(row("mode", config.mode if config_ok else "?", config_ok,
+              MODE_BLURB.get(config.mode, config.mode) if config_ok else f"config error: {config_error}"))
+    print(row("api key", "yes" if key_ok else "no", key_ok,
+              str(config.config_dir / ".env") if key_ok and config_ok else "missing — see CLAUDE.md to add ~/.config/jev-gate/.env"))
+    print(row("log", str(count), count > 0, f"decision(s) logged · last: {last_detail}"))
+    print()
+    return 0 if installed and config_ok and key_ok else 1
+
+
+def build_parser():
+    parser = argparse.ArgumentParser(prog="jev-gate", description="A Claude Code permission gate judged by Jev.")
+    sub = parser.add_subparsers(dest="cmd")
+
+    watch_p = sub.add_parser("watch", help="watch Bash-call decisions live (default)")
+    watch_p.add_argument("-n", "--lines", type=int, default=None,
+                          help="recent decisions to show first (default: 0 while following live, 20 with --no-follow)")
+    watch_p.add_argument("--no-follow", action="store_true", help="print recent decisions and exit")
+    watch_p.add_argument("--no-color", action="store_true")
+    watch_p.add_argument("--no-animation", action="store_true", help="skip the startup title animation")
+    watch_p.set_defaults(func=cmd_watch)
+
+    status_p = sub.add_parser("status", help="is the hook installed, which mode, is the log moving")
+    status_p.add_argument("--no-color", action="store_true")
+    status_p.set_defaults(func=cmd_status)
+
+    mode_p = sub.add_parser("mode", help="show or change the mode (shadow/explain/auto)")
+    mode_p.add_argument("value", nargs="?", choices=list(gate.MODES), help="new mode; omit to show the current one")
+    mode_p.add_argument("--no-color", action="store_true")
+    mode_p.set_defaults(func=cmd_mode)
+    return parser
+
+
+def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if not argv:
+        argv = ["watch"]
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    if not hasattr(args, "func"):
+        parser.print_help()
+        return 1
+    return args.func(args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

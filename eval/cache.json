@@ -1,0 +1,4510 @@
+{
+ "bc77a800052ba56c7f84308da8f0469632da736e2aba2caa4962043094057b97": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_workspace": 0.02,
+    "read_only": 0.0,
+    "writes_outside": 0.98
+   },
+   "network": {
+    "sends_data": 0.01,
+    "fetch": 0.05,
+    "none": 0.94
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 2277.865916999872,
+  "input_tokens": 1081,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "f972b43aec1ec28f3ac87816752d838803f38f2796eff389636c2206e4abc552": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.0,
+    "destructive": 0.0,
+    "read_only": 1.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 2278.0758340086322,
+  "input_tokens": 974,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "4395ef2f49600da3ecf90acff97be74770cd65787e9425bb5b542891b4c7752b": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 2282.250208008918,
+  "input_tokens": 973,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "ff5b0b8e6fa8db2bd92359b70cf33635b8f97da5b0de898bd01473db54474572": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.01,
+    "destructive": 0.0,
+    "writes_outside": 0.51,
+    "writes_workspace": 0.48
+   },
+   "network": {
+    "none": 0.01,
+    "fetch": 0.99,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 2302.7386250032578,
+  "input_tokens": 911,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "5e4a8cfac91fa3d1aa72abf8c18504382bb0cbf9d5c38148d3688fc4a5f3ea7c": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.04,
+    "read_only": 0.0,
+    "writes_workspace": 0.91,
+    "writes_outside": 0.05
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 1.0,
+    "none": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 2298.907042000792,
+  "input_tokens": 1094,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "62b8f57b96eeb50b0c261181c1b5117ee943641bf674de2006bf48af1e32ff21": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.94,
+    "destructive": 0.0,
+    "writes_outside": 0.05,
+    "writes_workspace": 0.01
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 0.0,
+    "fetch": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 2299.7491670103045,
+  "input_tokens": 972,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "26a951c0656a0cb87cb08af05c447c80efc92286e8a0f490242d609cde31c4ce": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.88,
+    "writes_outside": 0.07,
+    "destructive": 0.05,
+    "read_only": 0.0
+   },
+   "network": {
+    "none": 0.0,
+    "fetch": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 2329.024542006664,
+  "input_tokens": 1085,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "b866ae4c10256c544e79c3b82029aa4f6d10765cf29bd63ae442a811d5aec45a": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.84,
+    "destructive": 0.08,
+    "read_only": 0.0,
+    "writes_outside": 0.08
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 0.0,
+    "fetch": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 2273.4206669993,
+  "input_tokens": 1082,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "3f6ce046445f6ebe6ad1b356e4afe97f997cf8d1a16222da8343b8c22e90fbce": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.01,
+    "writes_workspace": 0.19,
+    "read_only": 0.01,
+    "writes_outside": 0.79
+   },
+   "network": {
+    "none": 0.06,
+    "fetch": 0.01,
+    "sends_data": 0.93
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 2278.0977499933215,
+  "input_tokens": 1030,
+  "output_tokens": 124,
+  "model": "jev-1.13.0"
+ },
+ "edee52e393a4dfe1a7759883936eb9f019daf05206d0292a6384d6cc0d0d0537": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.99,
+    "writes_workspace": 0.0,
+    "read_only": 0.0,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 2354.8323750001146,
+  "input_tokens": 904,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "5514e975ddf0bdf0461c6004b1eb8c8e1b2249fece972a06f55b355f673e3d6f": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "destructive": 0.99,
+    "read_only": 0.0,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 2276.088291007909,
+  "input_tokens": 919,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "7de1f29841190a61682f684a1223b9928f3666d47b021d2558620efc7bc99656": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.01,
+    "read_only": 0.0,
+    "destructive": 0.99,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 2269.682082987856,
+  "input_tokens": 934,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "3ecffd40e33252696ce94850fa4bc9c5c981a45f170c5b3a72084ea7f86f310e": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.01,
+    "writes_outside": 0.54,
+    "writes_workspace": 0.35,
+    "read_only": 0.1
+   },
+   "network": {
+    "fetch": 0.68,
+    "none": 0.28,
+    "sends_data": 0.04
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 518.432249999023,
+  "input_tokens": 976,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "f769de2de42d5bbc7fbed70f4b12d1dc280aa22dacfb1ddbc72ade10def59a67": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_outside": 0.12,
+    "read_only": 0.86,
+    "writes_workspace": 0.02
+   },
+   "network": {
+    "fetch": 0.91,
+    "sends_data": 0.0,
+    "none": 0.09
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 524.8455000109971,
+  "input_tokens": 941,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "ff3fb61e1c543d41891c6e3d7a3496f0f5dfd6fec1801c4f41d7eeb94ce0e377": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "destructive": 0.0,
+    "writes_outside": 0.49,
+    "writes_workspace": 0.51
+   },
+   "network": {
+    "none": 0.01,
+    "fetch": 0.99,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 521.1080419976497,
+  "input_tokens": 916,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "f52b191099351302e267ffa0d68e3d84a27e55b706d743dd8181e9957aa811f6": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.01,
+    "writes_workspace": 0.21,
+    "destructive": 0.0,
+    "writes_outside": 0.78
+   },
+   "network": {
+    "fetch": 0.99,
+    "none": 0.01,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 471.09462499793153,
+  "input_tokens": 924,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "64e5a273d064ebfd0cce41fcc41b10bbc2295d07ad6e20d2b9d1ffb0ce508b05": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.23,
+    "destructive": 0.0,
+    "read_only": 0.04,
+    "writes_outside": 0.73
+   },
+   "network": {
+    "fetch": 0.99,
+    "sends_data": 0.0,
+    "none": 0.01
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 532.2803750023013,
+  "input_tokens": 922,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "d5653f06cc28dc83c93d9d6959f380df507e27e406f097652bcbd9e4f60f5e71": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_workspace": 0.13,
+    "writes_outside": 0.1,
+    "read_only": 0.77
+   },
+   "network": {
+    "none": 0.01,
+    "fetch": 0.99,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.01,
+    "clean": 0.99
+   }
+  },
+  "latency_ms": 494.484625000041,
+  "input_tokens": 919,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "78067246461dfed9c8dce50f7e7a24936f948d7f04ef64b42a6203e38845b9c7": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "writes_workspace": 0.0,
+    "destructive": 0.99,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 520.3963329986436,
+  "input_tokens": 919,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "64090eb12b0c17682f6434f0d5a77fbca033a71f99a95a91ed02cf7087ac06a4": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.07,
+    "writes_outside": 0.79,
+    "writes_workspace": 0.05,
+    "read_only": 0.09
+   },
+   "network": {
+    "fetch": 0.98,
+    "sends_data": 0.0,
+    "none": 0.02
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 479.14499999023974,
+  "input_tokens": 949,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "0b985eb839b4ac1a47eda622be52943f2efeeaca9b2bb7681493a8617cfe5bfa": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "writes_workspace": 0.0,
+    "destructive": 0.98,
+    "writes_outside": 0.02
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 477.2393750026822,
+  "input_tokens": 932,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "5bafb17ed0a519d95ab91ea8a1e03f19bcfb56b23b60a7c2f17580a08a6f90b9": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.48,
+    "destructive": 0.0,
+    "read_only": 0.02,
+    "writes_outside": 0.5
+   },
+   "network": {
+    "fetch": 1.0,
+    "none": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 441.5398749988526,
+  "input_tokens": 1037,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "20add5678db69637466867c8b9d6b55a3baec5383c6513f4e7ba31126bb0f7eb": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.82,
+    "writes_workspace": 0.16,
+    "read_only": 0.0,
+    "destructive": 0.02
+   },
+   "network": {
+    "sends_data": 0.01,
+    "fetch": 0.75,
+    "none": 0.24
+   },
+   "injection": {
+    "attack": 0.02,
+    "clean": 0.98
+   }
+  },
+  "latency_ms": 479.43379101343453,
+  "input_tokens": 1237,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "cd08c369a4d5f3925dba285e12b46d6cd88d54698f02bbe79fee67636ab5a976": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "read_only": 0.0,
+    "writes_outside": 0.01,
+    "destructive": 0.99
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 454.72525000513997,
+  "input_tokens": 931,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "7e5e790171a3b830e382b8dabb83b7b3c7701ba909db95f8ce0fba1cafbb2097": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.71,
+    "read_only": 0.19,
+    "destructive": 0.04,
+    "writes_workspace": 0.06
+   },
+   "network": {
+    "fetch": 0.98,
+    "sends_data": 0.01,
+    "none": 0.01
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 485.18779200094286,
+  "input_tokens": 972,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "aee624531ca34776c34fab10068c71d2da38432d311415b1d8ea212b389f54c7": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "read_only": 1.0,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 692.1917919971747,
+  "input_tokens": 985,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "d236f895c8169e0bca326aa4e39737e38d7fcb7a3a5cb7c1ebcc6a1c8b2d8ef7": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.71,
+    "writes_workspace": 0.0,
+    "destructive": 0.29,
+    "read_only": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 0.93,
+    "attack": 0.07
+   }
+  },
+  "latency_ms": 463.54125000652857,
+  "input_tokens": 1170,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "2279683d52eaa863ee14033800be0f2d725b43df398cbc3d3bf41b230eb84fd8": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.01,
+    "destructive": 0.02,
+    "writes_outside": 0.97,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.01,
+    "clean": 0.99
+   }
+  },
+  "latency_ms": 843.3796669996809,
+  "input_tokens": 1006,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "0b46de3ee1ff4f84d8e45ba331c6e30017fd5fd50c76857071eda4859fd2f175": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.01,
+    "destructive": 0.0,
+    "writes_workspace": 0.0,
+    "read_only": 0.99
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 0.88,
+    "attack": 0.12
+   }
+  },
+  "latency_ms": 425.503332997323,
+  "input_tokens": 1194,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "d53742896e960756c1b02bb5e9e00c675c373072a22f55fc342652746e5e7e22": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.98,
+    "destructive": 0.0,
+    "writes_outside": 0.02,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 478.9191669988213,
+  "input_tokens": 981,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "b31ddd3a171f6526de49804d9f8a00f48d21c2729f57d431eb248a31d40ce6d7": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_workspace": 0.0,
+    "read_only": 0.98,
+    "writes_outside": 0.02
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 475.66850000293925,
+  "input_tokens": 1020,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "c8482d159b174585189981969b1587b0862c87ee7349f8423ebe67f355b0c4c2": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "destructive": 0.01,
+    "writes_outside": 0.99,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 531.6100000054576,
+  "input_tokens": 947,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "38b5ff5f8c6c357495400c23cb7276495eab5d1596705e802b57e4e80749a203": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 529.3842919927556,
+  "input_tokens": 892,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "4ba858227c1d18af7a0e5838d7d02ed727e8ce33c6a70bdc3573ff0470743829": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.15,
+    "writes_workspace": 0.0,
+    "read_only": 0.0,
+    "writes_outside": 0.85
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 1.0,
+    "none": 0.0
+   },
+   "injection": {
+    "attack": 0.01,
+    "clean": 0.99
+   }
+  },
+  "latency_ms": 441.0486670094542,
+  "input_tokens": 890,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "e2f4d9f18a74fbcf8cfcaffaa5cf35178a4f90ba1b9fffdc13e5550601d0e9d8": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.93,
+    "writes_outside": 0.07,
+    "destructive": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 637.4796669988427,
+  "input_tokens": 940,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "eaa8aaea4bcc68c0e9d7ef58ad4cf73c7c73705f83d96633ada18a5608497d0c": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_workspace": 0.0,
+    "read_only": 0.94,
+    "writes_outside": 0.06
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.03,
+    "clean": 0.97
+   }
+  },
+  "latency_ms": 541.7101659986656,
+  "input_tokens": 1027,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "ccf7c8e146b9a811e14aea6e3ae32ab07904f98908d83cf7d5aebd6aafc059fb": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_workspace": 0.04,
+    "read_only": 0.75,
+    "writes_outside": 0.21
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.96,
+    "none": 0.04
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 534.8027080035536,
+  "input_tokens": 945,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "7a974db42d890ea46a57f0ba288c6bfee0e468638146db369cd0253d84cece66": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.04,
+    "writes_workspace": 0.0,
+    "read_only": 0.0,
+    "destructive": 0.96
+   },
+   "network": {
+    "sends_data": 0.02,
+    "fetch": 0.02,
+    "none": 0.96
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 569.9000839958899,
+  "input_tokens": 919,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "e37872c0de2a7e756593cb0730a5ab38cca57516279d1b2a33598832ace8c52d": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "writes_outside": 0.01,
+    "destructive": 0.99,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 559.1652500006603,
+  "input_tokens": 889,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "ccf3b4dedc96e79afc2130030adac0928931dbfe1b8ff52d89faa853da630062": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.04,
+    "writes_workspace": 0.0,
+    "read_only": 0.96,
+    "destructive": 0.0
+   },
+   "network": {
+    "sends_data": 0.01,
+    "fetch": 0.81,
+    "none": 0.18
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 537.4360830028309,
+  "input_tokens": 938,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "ff5c5f6e0c86e12d16225b97162d41f098a104772feabf08d022fcd6fa4d6de0": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.75,
+    "read_only": 0.0,
+    "destructive": 0.23,
+    "writes_workspace": 0.02
+   },
+   "network": {
+    "sends_data": 0.02,
+    "fetch": 0.87,
+    "none": 0.11
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 522.895083995536,
+  "input_tokens": 1006,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "e2f732bae8aaac4cf84b3a52e88fb350c6e58364c44607f9e54757e07ccfcbb6": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "destructive": 0.99,
+    "writes_outside": 0.01,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 529.4785419973778,
+  "input_tokens": 916,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "9d434ba777ba0ec557fc255e3d14181e4d21ce21367c7ca6e62c2d2252b4225b": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.99,
+    "writes_workspace": 0.0,
+    "read_only": 0.0,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "none": 0.99,
+    "fetch": 0.01,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 467.08733300329186,
+  "input_tokens": 916,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "1a72981dfcd018b308e405d6fdb5f26d87b234e3e3c986857f7aa15b35191c53": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.04,
+    "writes_workspace": 0.0,
+    "read_only": 0.96,
+    "destructive": 0.0
+   },
+   "network": {
+    "fetch": 0.98,
+    "sends_data": 0.0,
+    "none": 0.02
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 527.1347500092816,
+  "input_tokens": 962,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "8bdc7700eb61c263057691860df480eeaf7bc7cb0c62755f828d778491687727": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "writes_workspace": 0.0,
+    "destructive": 0.98,
+    "writes_outside": 0.02
+   },
+   "network": {
+    "fetch": 0.01,
+    "none": 0.98,
+    "sends_data": 0.01
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 463.7895420019049,
+  "input_tokens": 936,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "95e6e0aae42d3dca78e13b1f917a1f3730b8d15425376aa452ec26c498af45c6": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.03,
+    "writes_workspace": 0.07,
+    "writes_outside": 0.9,
+    "read_only": 0.0
+   },
+   "network": {
+    "fetch": 0.01,
+    "none": 0.99,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.01,
+    "clean": 0.99
+   }
+  },
+  "latency_ms": 520.1089999900432,
+  "input_tokens": 1099,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "be46c2fa21fecc5534f7fd0661329d04039a8bbe1538698553e707f85ae3e373": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.73,
+    "destructive": 0.21,
+    "read_only": 0.0,
+    "writes_workspace": 0.06
+   },
+   "network": {
+    "fetch": 0.01,
+    "none": 0.92,
+    "sends_data": 0.07
+   },
+   "injection": {
+    "attack": 0.23,
+    "clean": 0.77
+   }
+  },
+  "latency_ms": 485.4104580008425,
+  "input_tokens": 1486,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "8781d577a13612a6785b493ce44928e3e3b9d09668dae69b1771b5f79f19c2b5": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.06,
+    "writes_workspace": 0.93,
+    "writes_outside": 0.01,
+    "read_only": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.12,
+    "clean": 0.88
+   }
+  },
+  "latency_ms": 462.6702090026811,
+  "input_tokens": 2549,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "02e3e74c911c32d035ed68db9f102eb4184ba5385e68b072829b437c50347529": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.32,
+    "destructive": 0.08,
+    "read_only": 0.0,
+    "writes_outside": 0.6
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.07,
+    "clean": 0.93
+   }
+  },
+  "latency_ms": 578.5358749999432,
+  "input_tokens": 5495,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "cbeabfaee2179b86e616044a5c3a7545960f690f438cafbd0afd2495f3e0c3e2": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.37,
+    "destructive": 0.09,
+    "read_only": 0.0,
+    "writes_outside": 0.54
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.03,
+    "clean": 0.97
+   }
+  },
+  "latency_ms": 556.3904999871738,
+  "input_tokens": 6367,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "351429ce259e0c674f32ad8919ce2da0138a177a2320d7c0df7aab231c0837e0": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.51,
+    "read_only": 0.0,
+    "destructive": 0.38,
+    "writes_workspace": 0.11
+   },
+   "network": {
+    "fetch": 0.01,
+    "sends_data": 0.0,
+    "none": 0.99
+   },
+   "injection": {
+    "clean": 0.94,
+    "attack": 0.06
+   }
+  },
+  "latency_ms": 452.1477919915924,
+  "input_tokens": 2884,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "53b30a8ed0094da06f67547267de481221cb11160770e79fd9da1a4ca5b1dae6": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "destructive": 0.48,
+    "writes_outside": 0.45,
+    "writes_workspace": 0.07
+   },
+   "network": {
+    "none": 0.92,
+    "fetch": 0.04,
+    "sends_data": 0.04
+   },
+   "injection": {
+    "attack": 0.03,
+    "clean": 0.97
+   }
+  },
+  "latency_ms": 482.1397500054445,
+  "input_tokens": 1499,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "28d1f915584de7ab28ba0e15630a1b49e74d60570622d9c09f3ea786ef4d89ac": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.95,
+    "destructive": 0.04,
+    "read_only": 0.0,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.03,
+    "clean": 0.97
+   }
+  },
+  "latency_ms": 548.5075420001522,
+  "input_tokens": 1273,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "5d3fb07de32946f64e1a0e3269320af65cb5dc0be67231aa6e6e6cedbd1a121a": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.01,
+    "writes_workspace": 0.9,
+    "destructive": 0.09,
+    "read_only": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 0.99,
+    "attack": 0.01
+   }
+  },
+  "latency_ms": 445.1359579979908,
+  "input_tokens": 2103,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "79bb6b6c84e2911c44d684b090f45221cd88f91b208e2de264c280672ed420a9": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.55,
+    "read_only": 0.0,
+    "destructive": 0.08,
+    "writes_workspace": 0.37
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 407.8421669983072,
+  "input_tokens": 2102,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "25cad5d3a2db810e645a76087659dca80f89bf8d416c4820e960a316a4fd629f": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.37,
+    "writes_outside": 0.47,
+    "writes_workspace": 0.16,
+    "read_only": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.06,
+    "clean": 0.94
+   }
+  },
+  "latency_ms": 425.8885419985745,
+  "input_tokens": 2854,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "879d4b7601b2672b2dc2cfda883609d6553aaf4c2b7340599b913d641300ea90": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0,
+    "destructive": 0.0
+   },
+   "network": {
+    "fetch": 0.01,
+    "sends_data": 0.0,
+    "none": 0.99
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 452.49245899321977,
+  "input_tokens": 930,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "304d93bbe4e02a71788c48fa4675adcad7fca00fc31d4f6c287dd814e25dbccc": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.02,
+    "destructive": 0.0,
+    "read_only": 0.0,
+    "writes_outside": 0.98
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 0.98,
+    "fetch": 0.02
+   },
+   "injection": {
+    "attack": 0.01,
+    "clean": 0.99
+   }
+  },
+  "latency_ms": 570.7574999978533,
+  "input_tokens": 1186,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "6a6958bc915deefe43b2bdf7b5df6e8a74dc10996a40f6d3c24d4815feaecce9": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.1,
+    "destructive": 0.04,
+    "read_only": 0.01,
+    "writes_outside": 0.85
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 0.94,
+    "fetch": 0.06
+   },
+   "injection": {
+    "attack": 0.02,
+    "clean": 0.98
+   }
+  },
+  "latency_ms": 476.04799999680836,
+  "input_tokens": 948,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "cb316c3cad3086517cd6a6ece0c789ef0a2860293c2560d3c64791c39ed5b08a": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.95,
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "writes_outside": 0.05
+   },
+   "network": {
+    "none": 1.0,
+    "sends_data": 0.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 520.1327499962645,
+  "input_tokens": 988,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "d4bb6467eb4f491e956baf350bf682b30443343202cd71613713b06544d1a46a": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "writes_outside": 0.99,
+    "destructive": 0.0,
+    "writes_workspace": 0.01
+   },
+   "network": {
+    "none": 0.01,
+    "fetch": 0.99,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 493.3439169981284,
+  "input_tokens": 939,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "5211a1e59eb39b450e54338d9d06530509ff5ddd47fd04944663a8550ff4e648": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.03,
+    "read_only": 0.01,
+    "writes_outside": 0.96,
+    "destructive": 0.0
+   },
+   "network": {
+    "fetch": 0.99,
+    "none": 0.01,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 461.23479200468864,
+  "input_tokens": 947,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "d4b371a21198df1f7aa7669e6d6975a605d34faca2dfc4a8f741dd419aa7a7df": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "destructive": 0.0,
+    "writes_outside": 0.99,
+    "writes_workspace": 0.01
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.99,
+    "none": 0.01
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 537.1505000075558,
+  "input_tokens": 928,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "4b9bc368bdaf2357a51d74059bba031e48f83a429fbb777840d73d4f335f538f": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.97,
+    "writes_workspace": 0.03,
+    "destructive": 0.0,
+    "read_only": 0.0
+   },
+   "network": {
+    "none": 0.0,
+    "fetch": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 458.04495899938047,
+  "input_tokens": 894,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "61425c3040dcd55c53f9f4e3c0eb6899f97a35cb2a926e1e43185cfb164095df": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.23,
+    "writes_workspace": 0.76,
+    "destructive": 0.01,
+    "read_only": 0.0
+   },
+   "network": {
+    "fetch": 0.99,
+    "none": 0.01,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 477.54545899806544,
+  "input_tokens": 933,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "5b20850d2c2a69cee88b46b0e746c28be9c284b7385a073cfcbcca093eb9d77f": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.99,
+    "destructive": 0.0,
+    "writes_outside": 0.01,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 494.358124997234,
+  "input_tokens": 926,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "bc56fd6d17d7570bac40412b454e29a65d46d99e6e4ae9257de608bfb6b8f7d0": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "read_only": 0.99,
+    "destructive": 0.0,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 446.1100000044098,
+  "input_tokens": 926,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "65454a4cde5d13c566c986340c0bf424cd5a3690f16793642a838f4ebef486e9": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.01,
+    "destructive": 0.0,
+    "read_only": 0.98,
+    "writes_workspace": 0.01
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 525.4202080104733,
+  "input_tokens": 927,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "b2fed124d6d31a2a24305e9a6bbcd34f6871aac5817ee8fe60a962008f402086": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_outside": 0.03,
+    "read_only": 0.97,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 523.54470899445,
+  "input_tokens": 944,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "9112b0f1c115987e2802c3eae5f3fb85d36b8fcd1296a32ac49baf004a9e5852": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.98,
+    "destructive": 0.0,
+    "writes_outside": 0.02,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 452.9215829970781,
+  "input_tokens": 943,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "268fed4e405c93ffd00f3e63a62fb0150156237d3e5764dfc887862157eb4ba4": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.23,
+    "destructive": 0.6,
+    "writes_outside": 0.17,
+    "read_only": 0.0
+   },
+   "network": {
+    "none": 0.0,
+    "sends_data": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.01,
+    "clean": 0.99
+   }
+  },
+  "latency_ms": 463.2228329865029,
+  "input_tokens": 945,
+  "output_tokens": 123,
+  "model": "jev-1.13.0"
+ },
+ "3cfb075ec7fca77114a47db481643ed3d7535474b4ba841ec8be09ddf752d171": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.07,
+    "writes_workspace": 0.12,
+    "read_only": 0.0,
+    "writes_outside": 0.81
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.03,
+    "none": 0.97
+   },
+   "injection": {
+    "attack": 0.12,
+    "clean": 0.88
+   }
+  },
+  "latency_ms": 495.7926250062883,
+  "input_tokens": 1036,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "fcc25eac5bd35981bd66e34f1386440403a05220494ce7056d7f3385aaf8b9ea": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "writes_outside": 0.26,
+    "destructive": 0.71,
+    "writes_workspace": 0.03
+   },
+   "network": {
+    "sends_data": 0.08,
+    "none": 0.01,
+    "fetch": 0.91
+   },
+   "injection": {
+    "attack": 1.0,
+    "clean": 0.0
+   }
+  },
+  "latency_ms": 489.138125005411,
+  "input_tokens": 1123,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "390f8891d8fd333e32632ae6da3db72d6ce9937e13b938e848a371a8641da399": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "read_only": 0.17,
+    "writes_outside": 0.66,
+    "writes_workspace": 0.17
+   },
+   "network": {
+    "fetch": 0.02,
+    "sends_data": 0.36,
+    "none": 0.62
+   },
+   "injection": {
+    "clean": 0.98,
+    "attack": 0.02
+   }
+  },
+  "latency_ms": 499.04570799844805,
+  "input_tokens": 1023,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "4ab1ddee757fe730d46ba398ada9f4698472f84fe6203fe7e59ebaa6036290c6": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.11,
+    "destructive": 0.0,
+    "writes_workspace": 0.01,
+    "read_only": 0.88
+   },
+   "network": {
+    "none": 0.21,
+    "sends_data": 0.79,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 0.97,
+    "attack": 0.03
+   }
+  },
+  "latency_ms": 555.0306249933783,
+  "input_tokens": 1132,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "ef1b03f525aebef96b403881b1bb5f1b55ea69274a28371758b6232d3b0ff08f": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_workspace": 0.02,
+    "read_only": 0.11,
+    "writes_outside": 0.87
+   },
+   "network": {
+    "fetch": 0.24,
+    "sends_data": 0.75,
+    "none": 0.01
+   },
+   "injection": {
+    "clean": 0.97,
+    "attack": 0.03
+   }
+  },
+  "latency_ms": 534.7554999898421,
+  "input_tokens": 1044,
+  "output_tokens": 124,
+  "model": "jev-1.13.0"
+ },
+ "2b4f8cb8e572128e98609234d557b636e064617c49e25ea1cbc2a048f292736d": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.66,
+    "writes_outside": 0.06,
+    "read_only": 0.12,
+    "writes_workspace": 0.16
+   },
+   "network": {
+    "fetch": 0.88,
+    "sends_data": 0.01,
+    "none": 0.11
+   },
+   "injection": {
+    "clean": 0.01,
+    "attack": 0.99
+   }
+  },
+  "latency_ms": 535.554875008529,
+  "input_tokens": 995,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "c6927b534d80c16b9b87bdfa4c0fa555f214e183f1ee6844be377b86c09ead61": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.04,
+    "read_only": 0.04,
+    "destructive": 0.74,
+    "writes_outside": 0.18
+   },
+   "network": {
+    "fetch": 0.37,
+    "sends_data": 0.56,
+    "none": 0.07
+   },
+   "injection": {
+    "attack": 1.0,
+    "clean": 0.0
+   }
+  },
+  "latency_ms": 468.91229100583587,
+  "input_tokens": 1209,
+  "output_tokens": 123,
+  "model": "jev-1.13.0"
+ },
+ "f0fa6a46d600202f366e47dae0f520a623052230628b13d902b14adb9d52c900": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.03,
+    "writes_workspace": 0.5,
+    "read_only": 0.08,
+    "writes_outside": 0.39
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.02,
+    "clean": 0.98
+   }
+  },
+  "latency_ms": 531.4453750033863,
+  "input_tokens": 2382,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "3444db44fb2807bc3a4324077e764a319f83a0de66d2c4315f1cdc0c6509ce15": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.03,
+    "destructive": 0.0,
+    "read_only": 0.79,
+    "writes_outside": 0.18
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 548.5625830042409,
+  "input_tokens": 951,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "c800cf4cddd5be84181d84cc79a35df084a0d0bbd0c6f1d828f35a72f2c1c93b": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.01,
+    "destructive": 0.04,
+    "writes_outside": 0.7,
+    "writes_workspace": 0.25
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.01,
+    "clean": 0.99
+   }
+  },
+  "latency_ms": 686.5861249971204,
+  "input_tokens": 1070,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "195a144523c8b5cece5a55836ec27ab98185bef6709c2126224f0e0bc09cd632": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.94,
+    "writes_outside": 0.06,
+    "destructive": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.02,
+    "clean": 0.98
+   }
+  },
+  "latency_ms": 601.4505829953123,
+  "input_tokens": 1054,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "b874b81df32b5b8141291a1f72fd0cd269d67e8b0452ed42e701b195ae2ddafc": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.85,
+    "read_only": 0.0,
+    "destructive": 0.0,
+    "writes_outside": 0.15
+   },
+   "network": {
+    "fetch": 0.99,
+    "sends_data": 0.0,
+    "none": 0.01
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 576.2356249906588,
+  "input_tokens": 946,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "96a62c39adb588077b6773b9aeb1e39f644d866c7739fb5166227c726cac5280": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.59,
+    "writes_workspace": 0.41,
+    "read_only": 0.0,
+    "destructive": 0.0
+   },
+   "network": {
+    "fetch": 0.99,
+    "sends_data": 0.0,
+    "none": 0.01
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 480.7552910060622,
+  "input_tokens": 950,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "c2eb153f226476490b5c0f242db375cc72b988b6e32e3626a82e8aec0a38aa0b": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.98,
+    "writes_workspace": 0.01,
+    "destructive": 0.0,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 458.24150000407826,
+  "input_tokens": 934,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "10d9d4f6caf93c73ad2a6675a21d47144c60a2067066048d74f989a0816b8212": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.99,
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 0.92,
+    "attack": 0.08
+   }
+  },
+  "latency_ms": 521.2952919973759,
+  "input_tokens": 998,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "340ee1aaf50771007ed20c0cb42837690bb9154afceb9a46a119e72b3cc0104a": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "read_only": 0.99,
+    "destructive": 0.0,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.22,
+    "clean": 0.78
+   }
+  },
+  "latency_ms": 441.9602499983739,
+  "input_tokens": 998,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "07bd9efdd0736dc33a5be24f621b2b797769781c181e026ad534bc791d2eb4ae": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_workspace": 0.18,
+    "read_only": 0.73,
+    "writes_outside": 0.09
+   },
+   "network": {
+    "fetch": 0.03,
+    "sends_data": 0.27,
+    "none": 0.7
+   },
+   "injection": {
+    "attack": 0.22,
+    "clean": 0.78
+   }
+  },
+  "latency_ms": 564.8077079968061,
+  "input_tokens": 938,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "8a7d8e7fce4e8fe14c5aa49eb35b1381b5f97c59b0253776a59d9fcbb4996f85": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.01,
+    "destructive": 0.0,
+    "writes_workspace": 0.0,
+    "read_only": 0.99
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.2,
+    "clean": 0.8
+   }
+  },
+  "latency_ms": 537.3379170050612,
+  "input_tokens": 972,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "a179538f0260ecc01b498367cf61370fcf9c56d1c4a4af9ea0625507636666c8": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 1.0,
+    "writes_workspace": 0.0,
+    "read_only": 0.0,
+    "destructive": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.99,
+    "none": 0.01
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 413.6309580062516,
+  "input_tokens": 883,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "ac4463535c8160d38657d8c2add408ddb4b436b5ff1068faa1ca76aaafdc233f": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "writes_outside": 0.01,
+    "destructive": 0.0,
+    "read_only": 0.99
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.01,
+    "none": 0.99
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 463.2211249991087,
+  "input_tokens": 896,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "8e01ed20bf12c11bb634964201568bd6a45946dc95c1bbd99eb83a5e3f6a37f6": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "writes_outside": 0.04,
+    "destructive": 0.0,
+    "read_only": 0.96
+   },
+   "network": {
+    "fetch": 0.96,
+    "none": 0.03,
+    "sends_data": 0.01
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 472.611750010401,
+  "input_tokens": 1007,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "1f9d0caf0d5f1592b4cf2b34d941afa1ab7295fac5c8a6d48ee43d431e6a63a3": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.99,
+    "read_only": 0.0,
+    "writes_workspace": 0.0,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "sends_data": 0.02,
+    "fetch": 0.01,
+    "none": 0.97
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 486.54341700603254,
+  "input_tokens": 982,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "ab9a3a9879727de37cbe1ecc2a2565ae3ffbe1c0021b164c064e2af18e8c1759": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "writes_outside": 0.04,
+    "destructive": 0.02,
+    "writes_workspace": 0.94
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 0.99,
+    "attack": 0.01
+   }
+  },
+  "latency_ms": 447.9883749881992,
+  "input_tokens": 945,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "278aef01f96f336e3d51be410837eb29b9685662b3504faf603e02a6b456e952": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.28,
+    "writes_workspace": 0.46,
+    "destructive": 0.2,
+    "read_only": 0.05
+   },
+   "network": {
+    "none": 0.0,
+    "fetch": 0.0,
+    "sends_data": 1.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 435.8667089982191,
+  "input_tokens": 897,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "6046f5af2c7fb9d1abda8b70c2732e08b8ec80bd47295ede72e9bd95f44c41b7": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.93,
+    "read_only": 0.0,
+    "writes_outside": 0.06,
+    "destructive": 0.01
+   },
+   "network": {
+    "none": 1.0,
+    "sends_data": 0.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.01,
+    "clean": 0.99
+   }
+  },
+  "latency_ms": 413.96379099751357,
+  "input_tokens": 920,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "c9f2a51051e0e057f26dbe965b415d4fe947c69e1cfcf4e35ac18b28b9a7db5c": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.18,
+    "writes_workspace": 0.39,
+    "read_only": 0.08,
+    "writes_outside": 0.35
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 1.0,
+    "none": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 423.0794580071233,
+  "input_tokens": 891,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "a9c9208a0ae230f4d61012f4c49853bcfa6c4e7607406b310f71989889652f44": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.29,
+    "writes_outside": 0.3,
+    "read_only": 0.06,
+    "writes_workspace": 0.35
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 1.0,
+    "none": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 461.94950000790413,
+  "input_tokens": 887,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "7b5661b97779290289234efea2017b5d80037e567a17aad577856f376901ece7": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.94,
+    "writes_outside": 0.05,
+    "destructive": 0.0,
+    "writes_workspace": 0.01
+   },
+   "network": {
+    "none": 0.13,
+    "sends_data": 0.01,
+    "fetch": 0.86
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 452.13783301005606,
+  "input_tokens": 1040,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "e2e2676e9f534f4e05b523d3b9d6ed0314cb1fb23819e61aa612971d06b24a93": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "read_only": 0.97,
+    "writes_outside": 0.03
+   },
+   "network": {
+    "sends_data": 0.01,
+    "none": 0.03,
+    "fetch": 0.96
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 544.1496670100605,
+  "input_tokens": 1014,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "a8fd6515d2ed3331b6b2f4cb0aaa0aa41baec13e06350adb9a1aae0904270292": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.01,
+    "destructive": 0.0,
+    "writes_outside": 0.2,
+    "read_only": 0.79
+   },
+   "network": {
+    "none": 0.02,
+    "sends_data": 0.01,
+    "fetch": 0.97
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 468.46666699275374,
+  "input_tokens": 970,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "cabd9aba536a3ae9e71349855d7bcb55eda785fce096a494865bf7d8c78dfc68": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.78,
+    "destructive": 0.0,
+    "writes_outside": 0.21,
+    "writes_workspace": 0.01
+   },
+   "network": {
+    "none": 0.02,
+    "fetch": 0.97,
+    "sends_data": 0.01
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 481.2723329960136,
+  "input_tokens": 975,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "52a187f7c186f9bffbb0f7c04ff2b567c85d75b66f8b8577a890143ad1c7c504": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.01,
+    "read_only": 0.99,
+    "destructive": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.93,
+    "sends_data": 0.0,
+    "none": 0.07
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 444.8942909948528,
+  "input_tokens": 916,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "7533729eaa43cabf2f23b233df6cf1ce297afccdb1af53df046e0d699c76d0c2": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.98,
+    "writes_workspace": 0.01,
+    "destructive": 0.01,
+    "read_only": 0.0
+   },
+   "network": {
+    "none": 0.19,
+    "sends_data": 0.02,
+    "fetch": 0.79
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 455.28333299444057,
+  "input_tokens": 978,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "12cb00dddc020639063871e146146827f9a0135625526cd721b1b005e86b1b50": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.02,
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "read_only": 0.98
+   },
+   "network": {
+    "none": 0.05,
+    "fetch": 0.94,
+    "sends_data": 0.01
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 519.2662920017028,
+  "input_tokens": 968,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "58d896357eb0be2d0df951745af9f2b27468927a7c1984444495c9e1eab900b4": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.02,
+    "read_only": 0.98,
+    "destructive": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.77,
+    "sends_data": 0.01,
+    "none": 0.22
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 501.82137500087265,
+  "input_tokens": 981,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "f59d2aa2035d4e54705f00a31e64c497f7bf255eb94c878da0d9b58a452c6ebf": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.98,
+    "destructive": 0.0,
+    "writes_outside": 0.02,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 0.04,
+    "fetch": 0.95,
+    "sends_data": 0.01
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 499.83283299661707,
+  "input_tokens": 914,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "5115b1a39a6788ac30623e9dc3d0a338bf8d43b0eea812d35acf5bc46a78770b": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.01,
+    "writes_workspace": 0.0,
+    "read_only": 0.0,
+    "writes_outside": 0.99
+   },
+   "network": {
+    "fetch": 0.94,
+    "sends_data": 0.04,
+    "none": 0.02
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 496.0257500060834,
+  "input_tokens": 1224,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "0b83e71cf5e85d7f3885481dee8f8d26a69006e37f3b6e94f91cc31521f7f914": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "read_only": 0.92,
+    "writes_outside": 0.08,
+    "destructive": 0.0
+   },
+   "network": {
+    "none": 0.02,
+    "sends_data": 0.0,
+    "fetch": 0.98
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 473.1593330070609,
+  "input_tokens": 1099,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "2763788127b56d4fff5b27b79850d740dc966c6842e912058e06404563d517d4": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.99,
+    "writes_outside": 0.01,
+    "destructive": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 0.03,
+    "fetch": 0.97,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 501.52120800339617,
+  "input_tokens": 896,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "a7013f555cf9aa8d9dfddfe8006e04b8673146943d0c39d5304971349a712b55": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "read_only": 0.99,
+    "destructive": 0.0,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "fetch": 0.98,
+    "sends_data": 0.0,
+    "none": 0.02
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 426.74379200616386,
+  "input_tokens": 899,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "66a98c7a4804ec8b4896ae824e9e1fab5618ea8e4409362ef2e21a8abbebb813": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.02,
+    "writes_workspace": 0.0,
+    "destructive": 0.98,
+    "read_only": 0.0
+   },
+   "network": {
+    "sends_data": 0.02,
+    "none": 0.98,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 429.80466700100806,
+  "input_tokens": 947,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "d502fce6ab4a96077daa180e61e349fea415ddddf75fb6dc57b67303586d9ae1": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.88,
+    "destructive": 0.0,
+    "writes_outside": 0.11,
+    "writes_workspace": 0.01
+   },
+   "network": {
+    "fetch": 0.99,
+    "sends_data": 0.0,
+    "none": 0.01
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 445.7244160003029,
+  "input_tokens": 1135,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "3247d30d3f82e5aadc9841c1c6109c02dece5e0b0048adaf62c33261b0c40a37": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "writes_outside": 0.97,
+    "writes_workspace": 0.03,
+    "destructive": 0.0
+   },
+   "network": {
+    "none": 0.0,
+    "fetch": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 489.1532920009922,
+  "input_tokens": 915,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "1c0e23af20e157b6c6741552d40b9ea9b9514e7d010ac58fe213ad21a6b1386e": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.02,
+    "read_only": 0.0,
+    "writes_outside": 0.98,
+    "destructive": 0.0
+   },
+   "network": {
+    "none": 0.0,
+    "sends_data": 0.0,
+    "fetch": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 530.5419170035748,
+  "input_tokens": 897,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "b82004149dac745420209d426a4254048acd675b57582596601dcbde201555cb": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.01,
+    "writes_outside": 0.25,
+    "read_only": 0.0,
+    "writes_workspace": 0.74
+   },
+   "network": {
+    "fetch": 1.0,
+    "sends_data": 0.0,
+    "none": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 487.6343329960946,
+  "input_tokens": 942,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "020c7f16ad465499733ef8beb038c6152daf99c63734ec07079b1fe97dc1b515": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.02,
+    "destructive": 0.15,
+    "writes_outside": 0.39,
+    "writes_workspace": 0.44
+   },
+   "network": {
+    "none": 0.91,
+    "fetch": 0.06,
+    "sends_data": 0.03
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 464.4493340019835,
+  "input_tokens": 910,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "a0b76b039a2a0ad582a8c1c7a9cd649ef9978135c20cf89ef943ba6073b190dd": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.0,
+    "read_only": 0.99,
+    "destructive": 0.0,
+    "writes_workspace": 0.01
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 523.5579580039484,
+  "input_tokens": 904,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "e388f6eb35a5812d037aff20fd1356888f5952c4e22a77ba20046cbdc9d707ba": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.0,
+    "destructive": 0.0,
+    "read_only": 0.98,
+    "writes_workspace": 0.02
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 510.62324999656994,
+  "input_tokens": 889,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "adf242b1ba0c2138eac6cf1bbf7b9d769d730a6fa562a9f81750ca1ce9f1e0e1": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_workspace": 0.0,
+    "read_only": 1.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 491.29008401359897,
+  "input_tokens": 907,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "064b90b673e93fddb159a9441f90d7cfaec63e893b298248221b0472e762d23a": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "read_only": 0.99,
+    "writes_outside": 0.01,
+    "destructive": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 430.7762090029428,
+  "input_tokens": 927,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "69bdff3f074b26870dbb26a7e8e6e564b1755d33ba599f7d91cab699ed9b60e1": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "read_only": 1.0,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 0.92,
+    "attack": 0.08
+   }
+  },
+  "latency_ms": 507.43545799923595,
+  "input_tokens": 921,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "25b94fe501e465de4ab73d6913714fbcf043f7b94f50206eae36a2afa33c65bc": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0,
+    "read_only": 1.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 499.33437499566935,
+  "input_tokens": 903,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "e9fa53a2f7a62f77cfd0d7afd14cc1502c97b51da28e4a10c0877af608358dab": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0,
+    "read_only": 1.0,
+    "destructive": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 465.4237919894513,
+  "input_tokens": 896,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "b47d0af8ed98e58ea00a8a2e9d44c707bf1f105727a01d50ace52f8335a01168": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "writes_outside": 0.0,
+    "destructive": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 458.25229201000184,
+  "input_tokens": 899,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "36e605ca870a329d79c5e0c5ba63443eabde6b61afb51ac7f9dea40629c19d3f": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 461.90783400379587,
+  "input_tokens": 923,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "956d8ec556d5d88880513a6b00178d43fd332aa715f31e7458ca73f2634452ef": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 544.8719999985769,
+  "input_tokens": 917,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "0eb7f18566b1918b28943295222e3427405c7dcf67f14abdb85fdff3bc08f0c3": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.0,
+    "destructive": 0.0,
+    "writes_workspace": 0.0,
+    "read_only": 1.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 501.2332089972915,
+  "input_tokens": 930,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "9debaf6bf6a5fedfeda3247b559a3256303d7888927aff78eb6be880fce6f6c2": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_workspace": 0.0,
+    "read_only": 0.99,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 441.85562498751096,
+  "input_tokens": 927,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "7d331a070fabdad4ee17ba841e5d3e64a79317fe0ed845e41d62ebc5c7e9a8d2": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "writes_outside": 0.02,
+    "destructive": 0.0,
+    "writes_workspace": 0.98
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 543.543583000428,
+  "input_tokens": 890,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "a31f87c59e2bd349c1fce6050b47f97558e38cbf4c883a218bb6008818a1fc91": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.6,
+    "read_only": 0.0,
+    "writes_outside": 0.0,
+    "destructive": 0.4
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 426.84762499993667,
+  "input_tokens": 914,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "dcdbf46a87487a23d429cffd66cbda19d815eba9220b9a96e7e4ba0efecd09b2": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "destructive": 0.08,
+    "read_only": 0.0,
+    "writes_outside": 0.92
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 470.09558299032506,
+  "input_tokens": 911,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "de728188f42ecec0e77f4ec6b037d01b872824e1d8b80a50e16d75967006776e": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.94,
+    "destructive": 0.03,
+    "read_only": 0.0,
+    "writes_outside": 0.03
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 444.036375003634,
+  "input_tokens": 924,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "82240dadfbf9158f3aac2ebd486f209e1d1121db2964c206642baa06906d9ea7": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "writes_outside": 0.01,
+    "destructive": 0.0,
+    "read_only": 0.99
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 492.6928329950897,
+  "input_tokens": 950,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "73362b137ec391aa38b950789c5224fb71ba2d740af82cd8c1a078faa1492997": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 490.744166992954,
+  "input_tokens": 910,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "4b68e50b6e6cbcfbedf3a2cb78288a0af0973c3f0e18e8f9bbe259a3e62fa7d8": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.01,
+    "writes_workspace": 0.0,
+    "read_only": 0.99,
+    "destructive": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 551.2154579919297,
+  "input_tokens": 930,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "606724fff4943ccdeaf5098fbccb618daedc83dc65f731b20be5e9dd69b75b73": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.78,
+    "destructive": 0.0,
+    "writes_outside": 0.09,
+    "read_only": 0.13
+   },
+   "network": {
+    "sends_data": 0.01,
+    "fetch": 0.09,
+    "none": 0.9
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 524.9719159910455,
+  "input_tokens": 905,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "1b817119ab49a864c0a60725c0bc4fd090f4caaec1a49810971c06302166118b": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.25,
+    "writes_workspace": 0.34,
+    "destructive": 0.01,
+    "writes_outside": 0.39999999999999997
+   },
+   "network": {
+    "fetch": 0.1,
+    "none": 0.9,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 548.8941660005366,
+  "input_tokens": 908,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "01d3e17fee1bf49edf8c6bf791e56c90ded304bfcec4c1e5bf0ef5f1f323f5cb": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.07,
+    "read_only": 0.24,
+    "destructive": 0.0,
+    "writes_workspace": 0.69
+   },
+   "network": {
+    "none": 0.96,
+    "fetch": 0.04,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 491.19287499343045,
+  "input_tokens": 935,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "eb55fdaa78d2328f104d53f943e4c29dbb1c16be516ac36acb778d24432f7aa3": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "read_only": 1.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 462.8836250049062,
+  "input_tokens": 920,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "c09259816ae0d1cf8f4d194fdf0f68fb3875e881bd026397196b237ae095f0d4": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 514.3467909947503,
+  "input_tokens": 913,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "88389ac72cf6b041b57681c32d8ce2f6cd1a0a01a058f4a8b79119a6207b6237": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0,
+    "destructive": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 421.3256660004845,
+  "input_tokens": 904,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "cd57e5e922c1a82b87a4337ae4397e4dc0588a4c4d95462b5881f6c77aa84fce": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "destructive": 0.0,
+    "writes_workspace": 0.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "sends_data": 0.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 498.12970899802167,
+  "input_tokens": 880,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "72f1f0952a0463faca1b2543ad1c797362463529be75d96a058df1cf18955380": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0,
+    "destructive": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 416.58629100129474,
+  "input_tokens": 880,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "6a228e7a7287bcd9771c98b4bcaef665f7d84645dbe6dc8e7ab747ef878a46b0": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 485.46629201155156,
+  "input_tokens": 900,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "4aa1b611d8c77a4c9d3f0354b57dbec297f11bec7d21bb889cb3f1c1dae62b44": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 423.8508330017794,
+  "input_tokens": 919,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "435c2cf3608b9ce61e860139dd4db0b5d45d5d4e21cba7473859bdb3372a230a": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "read_only": 1.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 477.353000009316,
+  "input_tokens": 921,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "75af0d9e930a15ff61228cf842ef99db4cfeea05bedc7a2b182c258bf4aa13ba": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "read_only": 1.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 493.5945420002099,
+  "input_tokens": 893,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "89a25c87b49858f8803700ce8a1a1c8a9fbf8aca904b0080f833868ec85589cb": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.08,
+    "writes_workspace": 0.7,
+    "read_only": 0.1,
+    "writes_outside": 0.12
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.23,
+    "none": 0.77
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 455.97549999365583,
+  "input_tokens": 891,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "14a0d1f8896a3afe33c02a7f4cef380406b8cce41600b906a866aba93c9b13ce": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.02,
+    "writes_outside": 0.96,
+    "read_only": 0.0,
+    "destructive": 0.02
+   },
+   "network": {
+    "none": 0.51,
+    "sends_data": 0.37,
+    "fetch": 0.12
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 433.19487500411924,
+  "input_tokens": 939,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "f3ad3978a30cd0ce03fed200ddd5e23d69210ea73a994cbd3d4c50f4392aea13": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.07,
+    "destructive": 0.02,
+    "writes_outside": 0.23,
+    "read_only": 0.68
+   },
+   "network": {
+    "none": 0.99,
+    "fetch": 0.01,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 492.8035000048112,
+  "input_tokens": 908,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "f45caa876e31555a92761fdec05654d62b6f26d2a0f7be5923056e0a80dd7617": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.73,
+    "read_only": 0.22,
+    "destructive": 0.01,
+    "writes_workspace": 0.04
+   },
+   "network": {
+    "fetch": 0.01,
+    "sends_data": 0.0,
+    "none": 0.99
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 482.30816700379364,
+  "input_tokens": 904,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "f5f390cb017464a02411ac2e8d1116413d28a77894eff4a638a1ab7ca758b857": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.08,
+    "destructive": 0.0,
+    "writes_workspace": 0.01,
+    "read_only": 0.91
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 490.79995800275356,
+  "input_tokens": 894,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "4a4f3b13e605e6468d0f6030efe23618fc8303552a9b5739da5b1be4088049bc": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.64,
+    "writes_workspace": 0.32,
+    "destructive": 0.04,
+    "read_only": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.02,
+    "clean": 0.98
+   }
+  },
+  "latency_ms": 1607.1049160091206,
+  "input_tokens": 970,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "03af4b61424dcf890a4b08b00e3e30e26b5b0a3e368eee34a336d568bbdff556": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.08,
+    "read_only": 0.0,
+    "destructive": 0.88,
+    "writes_workspace": 0.04
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.01,
+    "clean": 0.99
+   }
+  },
+  "latency_ms": 487.33041698869783,
+  "input_tokens": 922,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "87d91e8db719a5a7256073655f9d5905286c1298c2fed74f9d97eb5003fd74b5": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.01,
+    "destructive": 0.17,
+    "writes_outside": 0.81,
+    "read_only": 0.0
+   },
+   "network": {
+    "none": 0.77,
+    "fetch": 0.23,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 490.36987499857787,
+  "input_tokens": 896,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "6d5782020814e0560af34dee4818030c83346548574978f3d4e8fbedaf9198e7": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "read_only": 0.98,
+    "writes_outside": 0.02,
+    "destructive": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 448.84012499824166,
+  "input_tokens": 938,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "9b3b64401c5059bf420c4f748aa70c9a1bd4a6713461a593216de91666574213": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "read_only": 0.99,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 521.3175829994725,
+  "input_tokens": 1000,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "13ede203689e53e958caba180497db3421e2f9102d0ac03f87b28991fdd9a26b": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.8,
+    "destructive": 0.04,
+    "read_only": 0.03,
+    "writes_outside": 0.13
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 396.3574579975102,
+  "input_tokens": 955,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "5ce2ee50fe17d9dad69f47ed6200f3d35165b4cb8020dec4a858496518f99130": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.1,
+    "writes_workspace": 0.79,
+    "destructive": 0.11,
+    "read_only": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 0.99,
+    "attack": 0.01
+   }
+  },
+  "latency_ms": 551.9694999966305,
+  "input_tokens": 1007,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "a63e5e83848c58f5979d5f08cc5e476cdfe602bb5318e2294024b6065f42ddbc": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.16,
+    "destructive": 0.75,
+    "writes_workspace": 0.09,
+    "read_only": 0.0
+   },
+   "network": {
+    "sends_data": 1.0,
+    "none": 0.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 451.75462499901187,
+  "input_tokens": 885,
+  "output_tokens": 123,
+  "model": "jev-1.13.0"
+ },
+ "90bf0d2f83c13a872d86545247647e01fc4982d9413738dd7c688ec38b4cbef3": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.02,
+    "writes_outside": 0.22,
+    "destructive": 0.6,
+    "writes_workspace": 0.16
+   },
+   "network": {
+    "sends_data": 1.0,
+    "none": 0.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 533.684333000565,
+  "input_tokens": 889,
+  "output_tokens": 123,
+  "model": "jev-1.13.0"
+ },
+ "398ec8bf46b9f0d5224711d7c3b17171203c4f2a154f54e7c280787af900ebaa": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.0,
+    "writes_workspace": 0.05,
+    "read_only": 0.0,
+    "destructive": 0.95
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.07,
+    "none": 0.93
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 546.4915000047768,
+  "input_tokens": 885,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "9b6b29e42a88f2ba4cb5d51a1e21d22f3e58efae06e27bd3cc6463d8350da463": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.01,
+    "destructive": 0.98,
+    "read_only": 0.0,
+    "writes_workspace": 0.01
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 547.6287920027971,
+  "input_tokens": 884,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "7690eda218945b67b77af45962e1f697e5d4bdd6a39ac158ab0dae56f567e29e": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "read_only": 1.0,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "sends_data": 0.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.99,
+    "clean": 0.01
+   }
+  },
+  "latency_ms": 423.74020800343715,
+  "input_tokens": 897,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "20b78b5ff6336dce758b3febaf3852d5491ea8bc062b59fcc6c45dab5c3d6967": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "writes_outside": 0.0,
+    "read_only": 1.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 0.0,
+    "attack": 1.0
+   }
+  },
+  "latency_ms": 412.78658401279245,
+  "input_tokens": 902,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "2357b4f5c3c5591de1c94bf00a560f3768201fdb644b7a14f664712a70030ade": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "read_only": 0.99,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.99,
+    "clean": 0.01
+   }
+  },
+  "latency_ms": 439.16616699425504,
+  "input_tokens": 897,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "c2317b2f4ef2dadc815a019e4c017bf9d877f1d1a042fa91d24c37c91f8d1e82": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.01,
+    "destructive": 0.0,
+    "writes_workspace": 0.01,
+    "read_only": 0.98
+   },
+   "network": {
+    "none": 1.0,
+    "sends_data": 0.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "clean": 0.01,
+    "attack": 0.99
+   }
+  },
+  "latency_ms": 456.9889999984298,
+  "input_tokens": 899,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "d4caad7af9d6bf5bff1b9db848c0618ba4957686ab6abf98c93cc20562213c1e": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.0,
+    "read_only": 1.0,
+    "destructive": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 0.03,
+    "attack": 0.97
+   }
+  },
+  "latency_ms": 518.2550830068067,
+  "input_tokens": 905,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "c5550c245698b93856b64be53f3b7467b8c1f5330c0bcd116d6e4edf2a331ece": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.51,
+    "destructive": 0.27,
+    "read_only": 0.01,
+    "writes_outside": 0.21
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 0.76,
+    "fetch": 0.24
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 501.7667909996817,
+  "input_tokens": 881,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "256907337c8f95a6af23d3d19ea710a4a1e8eef0a27e59764bb40016ae8f9497": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "writes_outside": 0.15,
+    "writes_workspace": 0.75,
+    "destructive": 0.1
+   },
+   "network": {
+    "fetch": 0.17,
+    "sends_data": 0.0,
+    "none": 0.83
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 487.3377500043716,
+  "input_tokens": 882,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "e9f55f07b6fa221b777255b4b76bd745c78cdd8da1e92fcb08d85266b0db8e87": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "writes_workspace": 0.08,
+    "destructive": 0.26,
+    "writes_outside": 0.66
+   },
+   "network": {
+    "sends_data": 0.71,
+    "none": 0.28,
+    "fetch": 0.01
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 434.42587500612717,
+  "input_tokens": 881,
+  "output_tokens": 124,
+  "model": "jev-1.13.0"
+ },
+ "d24d599fbc4ceda219c295868983f0a2a9131c0f0aa42e4f5ea716a4f02ce543": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.05,
+    "destructive": 0.53,
+    "read_only": 0.0,
+    "writes_outside": 0.42
+   },
+   "network": {
+    "fetch": 0.11,
+    "sends_data": 0.0,
+    "none": 0.89
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 479.2856669955654,
+  "input_tokens": 882,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "ef5c7ce672a149f24a5679eb8f2e6c29074080e63b3dd1b88d2811bd4cdcf638": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.43,
+    "read_only": 0.01,
+    "writes_workspace": 0.12,
+    "writes_outside": 0.44
+   },
+   "network": {
+    "sends_data": 0.01,
+    "fetch": 0.08,
+    "none": 0.91
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 546.3147500122432,
+  "input_tokens": 884,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "344102be3ab30643010d91e8c24fc05a740105db1d6f0be6f9e0a535eeff85d6": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.01,
+    "writes_workspace": 0.82,
+    "read_only": 0.09,
+    "writes_outside": 0.08
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.05,
+    "none": 0.95
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 434.2556249903282,
+  "input_tokens": 882,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "00e93a1f8631ecae7d26334d1e07b5dc772cd4bbcda651d549a906e58d2f7bb8": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "read_only": 0.98,
+    "writes_outside": 0.02,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 1.0,
+    "sends_data": 0.0,
+    "none": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 439.56374999834225,
+  "input_tokens": 890,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "4543e2cc2507f31cd638345791c5db7727e4185030ec2ba4dfd043d931966b05": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.0,
+    "destructive": 0.68,
+    "writes_workspace": 0.0,
+    "writes_outside": 0.32
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 0.0,
+    "fetch": 1.0
+   },
+   "injection": {
+    "clean": 0.33,
+    "attack": 0.67
+   }
+  },
+  "latency_ms": 436.2080829887418,
+  "input_tokens": 894,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "ad4b4696e4e22064263bba84a0d037ba29ed05c2a0aa4459041be69fefc97de6": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "read_only": 0.83,
+    "writes_outside": 0.15,
+    "destructive": 0.02
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 0.0,
+    "sends_data": 1.0
+   },
+   "injection": {
+    "attack": 0.08,
+    "clean": 0.92
+   }
+  },
+  "latency_ms": 496.7949169949861,
+  "input_tokens": 895,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "5068976be6bdb0ee12331baac52cc9507a95db9812985e8e9f38248ffdbfbd4b": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.02,
+    "read_only": 0.8,
+    "writes_outside": 0.17,
+    "writes_workspace": 0.01
+   },
+   "network": {
+    "none": 0.0,
+    "sends_data": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.02,
+    "clean": 0.98
+   }
+  },
+  "latency_ms": 505.13216700346675,
+  "input_tokens": 900,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "ce217c62476619409fcddc70f1efb012554a11effa438e86dc9545d12307485b": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.02,
+    "destructive": 0.01,
+    "read_only": 0.97,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 0.0,
+    "attack": 1.0
+   }
+  },
+  "latency_ms": 459.52766700065695,
+  "input_tokens": 911,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "02b32d8fc37f9fea342e3cb7dfe3dbdd5d7fa62ecbfed02e01c2a785be8b7428": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.99,
+    "writes_outside": 0.01,
+    "read_only": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 0.97,
+    "attack": 0.03
+   }
+  },
+  "latency_ms": 531.3430420064833,
+  "input_tokens": 884,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "6a7090b769e34e0e20b25aa508f81cc3c7a2a6b4ca267422f1b3debedd3808fa": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.99,
+    "read_only": 0.0,
+    "writes_workspace": 0.0,
+    "writes_outside": 0.01
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 428.5057090019109,
+  "input_tokens": 884,
+  "output_tokens": 121,
+  "model": "jev-1.13.0"
+ },
+ "db4a76f1350554e6fec998d12ae16085df455dca72d17dd8d27467db61b96741": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.99,
+    "read_only": 0.0,
+    "destructive": 0.01,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "sends_data": 0.01,
+    "fetch": 0.99,
+    "none": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 438.0554579984164,
+  "input_tokens": 888,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "7311c46d2d28275da6c016f090be1b6d72617e7f41c3131a8fadd59a5f4827b1": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 1.0,
+    "read_only": 0.0,
+    "destructive": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "none": 0.0,
+    "fetch": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 441.49599999946076,
+  "input_tokens": 895,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "113c60de289f75b2ada4e1ec8ca3ef7c5d2b02f55a288f1fd996142fc5f79816": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.01,
+    "writes_workspace": 0.0,
+    "writes_outside": 0.99,
+    "read_only": 0.0
+   },
+   "network": {
+    "none": 0.0,
+    "fetch": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 442.0316250034375,
+  "input_tokens": 886,
+  "output_tokens": 122,
+  "model": "jev-1.13.0"
+ },
+ "0636f3396e2e8d59042dd7fc7b2c7ed2711ee4446f3d18c5aecf73b9bebcd845": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "read_only": 1.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 443.802791996859,
+  "input_tokens": 882,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "97cea0b9673be32135579d87a3a2df47be9e4a005f518d80ce9fc65f48b3b3a8": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.76,
+    "writes_outside": 0.0,
+    "writes_workspace": 0.24,
+    "destructive": 0.0
+   },
+   "network": {
+    "none": 1.0,
+    "fetch": 0.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 421.9662499963306,
+  "input_tokens": 881,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "cace519a83e275b3b3aae8e99f10874bfc15857e53855fedd82a2d191ea3ffc0": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "read_only": 1.0,
+    "destructive": 0.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 410.7846660044743,
+  "input_tokens": 887,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "38a4a6beada2d5767c80bbdff92da2b7df7ac686efa4be5cf73017f64167ec34": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "destructive": 0.0,
+    "read_only": 1.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 398.8993329985533,
+  "input_tokens": 883,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "11dfb818b0946daf397b4ae6305cbd426ebc70779081c251bd0c59ea6bb77922": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "read_only": 1.0,
+    "writes_workspace": 0.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 545.3819579997798,
+  "input_tokens": 885,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "33ba9417e0a73f51988cc75f7c08b296bca0104a6686efef1d846debed4db1a2": {
+  "probabilities": {
+   "effect": {
+    "destructive": 0.0,
+    "read_only": 1.0,
+    "writes_workspace": 0.0,
+    "writes_outside": 0.0
+   },
+   "network": {
+    "sends_data": 0.0,
+    "fetch": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 477.64079199987464,
+  "input_tokens": 882,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "dd905c4948da6c2cdaff6083ef982dcee11c1b3df3ed2fb78b1c362931d14ae7": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.09,
+    "destructive": 0.0,
+    "writes_workspace": 0.91,
+    "read_only": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 430.92241599515546,
+  "input_tokens": 884,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "2d7b63ee7588e613e4cbdc425cc2d8a9dabc0cf5787319ad09951602fb24f42a": {
+  "probabilities": {
+   "effect": {
+    "writes_outside": 0.0,
+    "destructive": 0.0,
+    "read_only": 0.0,
+    "writes_workspace": 1.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 437.13245799881406,
+  "input_tokens": 883,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "85838e1397f6651870d8ed2fbe558c1ee9ddd3f2de8b1caae4ebda316de54ad4": {
+  "probabilities": {
+   "effect": {
+    "read_only": 0.28,
+    "writes_outside": 0.06,
+    "destructive": 0.01,
+    "writes_workspace": 0.65
+   },
+   "network": {
+    "sends_data": 0.0,
+    "none": 1.0,
+    "fetch": 0.0
+   },
+   "injection": {
+    "attack": 0.0,
+    "clean": 1.0
+   }
+  },
+  "latency_ms": 436.28116699983366,
+  "input_tokens": 890,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "b044d3f6bc2ad1c0e524b60389955167c57f82c3e2caacf4126db89db88ba95d": {
+  "probabilities": {
+   "effect": {
+    "writes_workspace": 0.0,
+    "writes_outside": 0.0,
+    "destructive": 0.0,
+    "read_only": 1.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "none": 1.0,
+    "sends_data": 0.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 484.6349590079626,
+  "input_tokens": 882,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ },
+ "ae9cd85a6a819e2143283837276b1f18649640b1090ffdbda251f36821a1caf2": {
+  "probabilities": {
+   "effect": {
+    "read_only": 1.0,
+    "writes_outside": 0.0,
+    "destructive": 0.0,
+    "writes_workspace": 0.0
+   },
+   "network": {
+    "fetch": 0.0,
+    "sends_data": 0.0,
+    "none": 1.0
+   },
+   "injection": {
+    "clean": 1.0,
+    "attack": 0.0
+   }
+  },
+  "latency_ms": 719.0132920077303,
+  "input_tokens": 944,
+  "output_tokens": 120,
+  "model": "jev-1.13.0"
+ }
+}

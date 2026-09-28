@@ -15,6 +15,7 @@ import argparse
 import collections
 import json
 import os
+import shutil
 import sys
 import time
 from datetime import datetime, timezone
@@ -55,6 +56,32 @@ def tail_lines(target, n):
     return list(keep)
 
 
+def count_and_last(target):
+    """One pass over the log: (total non-blank lines, last non-blank line or None)."""
+    if not target.exists():
+        return 0, None
+    count, last = 0, None
+    with target.open() as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                count += 1
+                last = line
+    return count, last
+
+
+def relative_time(iso_ts):
+    """'3m ago'-style rendering of one of our own timestamps. 'unknown' for anything else."""
+    try:
+        ts = datetime.fromisoformat(iso_ts)
+    except (ValueError, TypeError):
+        return "unknown"
+    seconds = (datetime.now(timezone.utc) - ts).total_seconds()
+    for cutoff, unit, size in ((60, "s", 1), (3600, "m", 60), (86400, "h", 3600), (float("inf"), "d", 86400)):
+        if seconds < cutoff:
+            return f"{max(0, int(seconds / size))}{unit} ago"
+
+
 def follow(target, poll_s=POLL_S):
     """Yield each new line appended to target, forever. Blocks between polls; Ctrl+C to stop.
 
@@ -91,29 +118,85 @@ def follow(target, poll_s=POLL_S):
 
 _DIM = "\033[2m"
 _RESET = "\033[0m"
-_TAGS = {"allow": ("ALLOW", "\033[1;32m"), "ask": ("ASK  ", "\033[1;33m")}
+_BOLD = "\033[1m"
+_META = "\033[36m"
+_TAGS = {"allow": ("ALLOW", "✓", "\033[1;32m"), "ask": ("ASK  ", "?", "\033[1;33m")}
+_UNKNOWN_COLOR = "\033[1;31m"
 
 
-def format_entry(entry, color=True):
-    """One decision as a two-line, human-readable block."""
+def format_entry(entry, color=True, width=None):
+    """One decision as a small card: accent bar + icon/tag + bold command with the timestamp
+    right-aligned, then one detail line — the reason dimmed, latency/cost picked out in a
+    distinct accent so the eye can scan for cost and speed without reading the whole reason.
+
+    `width` overrides the detected terminal width — mainly so tests don't depend on the
+    real terminal they happen to run in.
+    """
+    width = width if width is not None else shutil.get_terminal_size(fallback=(100, 24)).columns
     ts = (entry.get("ts") or "")[11:19] or "?"
-    tag, bold = _TAGS.get(entry.get("decision"), (str(entry.get("decision", "?")).upper().ljust(5), "\033[1;31m"))
+    tag, icon, accent = _TAGS.get(entry.get("decision"), (str(entry.get("decision", "?")).upper().ljust(5), "!", _UNKNOWN_COLOR))
     command = entry.get("command") or ""
-    if len(command) > 140:
-        command = command[:140] + "…"
+    if len(command) > 120:
+        command = command[:120] + "…"
 
-    bits = [entry.get("reason") or ""]
+    reason = entry.get("reason") or ""
+    meta_bits = []
     if entry.get("latency_ms") is not None:
-        bits.append(f"{entry['latency_ms']:.0f} ms")
+        meta_bits.append(f"{entry['latency_ms']:.0f} ms")
     if entry.get("cost_usd"):
-        bits.append(f"${entry['cost_usd']:.6f}")
+        meta_bits.append(f"${entry['cost_usd']:.6f}")
     if entry.get("observed"):
-        bits.append("background: didn't change what you saw")
-    detail = " · ".join(b for b in bits if b)
+        meta_bits.append("background — didn't change what you saw")
 
+    plain_head = f"▎ {icon} {tag}  {command}"
+    pad = " " * max(1, width - len(plain_head) - len(ts) - 1)
     if color:
-        return f"{_DIM}{ts}{_RESET}  {bold}{tag}{_RESET}  {command}\n         {_DIM}{detail}{_RESET}"
-    return f"{ts}  {tag}  {command}\n         {detail}"
+        head = f"{accent}▎{_RESET} {accent}{icon} {tag}{_RESET}  {_BOLD}{command}{_RESET}{pad}{_DIM}{ts}{_RESET}"
+        segments = ([(_DIM, reason)] if reason else []) + [(_META, b) for b in meta_bits]
+        detail = f"{_DIM} · {_RESET}".join(f"{c}{text}{_RESET}" for c, text in segments)
+    else:
+        head = f"{plain_head}{pad}{ts}"
+        detail = " · ".join([reason] + meta_bits if reason else meta_bits)
+    return "\n".join([head, f"  {detail}"] if detail else [head])
+
+
+# --- the watch loop, shared by this module's own CLI and jev-gate's --------
+
+def watch(n=20, follow_after=True, color=True, target=None, on_start=None):
+    """Run on_start (if given), then print the last n decisions, then (if follow_after) keep
+    printing new ones until Ctrl+C. Everything log-shaped comes after the banner, never before it.
+
+    Prints a one-line allow/ask summary for what it saw while following.
+    """
+    target = target or path()
+
+    def show(raw_line):
+        try:
+            entry = json.loads(raw_line)
+        except ValueError:
+            return None
+        print(format_entry(entry, color))
+        print()
+        return entry.get("decision")
+
+    if follow_after and on_start:
+        on_start()  # a one-shot dump (follow_after=False) skips the banner: there's nothing to watch
+    for raw_line in tail_lines(target, n):
+        show(raw_line)
+    if not follow_after:
+        return
+
+    seen = collections.Counter()
+    try:
+        for raw_line in follow(target):
+            decision = show(raw_line)
+            if decision:
+                seen[decision] += 1
+    except KeyboardInterrupt:
+        pass
+    if seen:
+        line = f"--- {seen.get('allow', 0)} allowed, {seen.get('ask', 0)} asked while watching ---"
+        print(f"\n{_DIM}{line}{_RESET}" if color else f"\n{line}")
 
 
 # --- CLI ---------------------------------------------------------------------
@@ -124,27 +207,13 @@ def main(argv=None):
     parser.add_argument("--no-follow", action="store_true", help="print recent decisions and exit; don't wait for new ones")
     parser.add_argument("--no-color", action="store_true")
     args = parser.parse_args(argv)
-
-    target = path()
     color = sys.stdout.isatty() and not args.no_color
 
-    def show(raw_line):
-        try:
-            print(format_entry(json.loads(raw_line), color))
-        except (ValueError, KeyError):
-            pass  # a malformed line is a log bug, not a reason to crash the viewer
+    def on_start():
+        print(f"\n{_DIM}--- watching {path()} — Ctrl+C to stop ---{_RESET}\n" if color
+              else f"\n--- watching {path()} — Ctrl+C to stop ---\n", file=sys.stderr)
 
-    for raw_line in tail_lines(target, args.lines):
-        show(raw_line)
-    if args.no_follow:
-        return 0
-
-    print(f"\n{_DIM if color else ''}--- watching {target} — Ctrl+C to stop ---{_RESET if color else ''}\n", file=sys.stderr)
-    try:
-        for raw_line in follow(target):
-            show(raw_line)
-    except KeyboardInterrupt:
-        pass
+    watch(n=args.lines, follow_after=not args.no_follow, color=color, on_start=on_start)
     return 0
 
 
