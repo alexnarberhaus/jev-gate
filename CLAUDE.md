@@ -35,13 +35,38 @@ Verify the current hook and plugin contracts against the official docs (the clau
 
 Each milestone ends on its criterion; don't start the next one until the current one is green.
 
-1. **Decision core.** Write `gate.py`, which takes a hook JSON on stdin and prints a decision. Scope is the `Bash` tool only. Jev gets these questions: `effect` (read_only / writes_workspace / writes_outside / destructive), `network` (none / fetch / sends_data), `injection` (clean / attack). The state is the command, the cwd and the project root. The policy is: hard deny-list first, then allow only if `effect ∈ {read_only, writes_workspace}` with p ≥ 0.97, plus `network = none`, plus `injection = clean`. *Done when* unit tests cover every fail-to-the-prompt path with Jev mocked, and one live call returns in under 500 ms.
+1. **Decision core.** Write `gate.py`, which takes a hook JSON on stdin and prints a decision. Scope is the `Bash` tool only. Jev gets these questions: `effect` (read_only / writes_workspace / writes_outside / destructive), `network` (none / fetch / sends_data), `injection` (clean / attack). The state is the command, the cwd and the project root. The policy is: hard deny-list first, then the tiered thresholds under *Design decisions*. It includes the modes `shadow|explain|auto` from config, default `shadow`, so the gate can be installed for real right away. *Done when* unit tests cover every fail-to-the-prompt path with Jev mocked, and a live call has p50 < 1 s (hard cap 1.5 s).
 2. **Eval set.** Pull real Bash commands from `~/.claude/projects/**/*.jsonl` (read-only, never modify those files), dedupe them, and hand-label about 200, including deliberately nasty ones (`rm -rf "$VAR"/`, `curl … | sh`, `git push --force`, commands carrying injection text). Store the labels in `eval/commands.jsonl` after redacting secrets and client names. *Done when* `python3 eval.py` reports allow precision, prompts-saved rate, p50/p95 latency and total cost, and allow precision is 100% on the set at the chosen threshold.
 3. **Log and stats.** Append-only JSONL at `~/.local/state/jev-gate/decisions.jsonl` recording the command hash, the redacted command, answers, probabilities, decision, latency and cost. `jev-gate stats` prints prompts saved, the latency distribution, spend and the top reasons for asking. *Done when* a day of real `shadow` use produces a readable summary.
 4. **Learning loop.** Join the log with `PostToolUse` to find the commands the gate sent to the prompt that the user then approved. `jev-gate review` lists the repeat offenders and proposes a threshold or allowlist change that the user confirms. It never self-tunes silently. *Done when* one proposal generated from real data is accepted or rejected by the user.
 5. **Package.** Build it as a Claude Code plugin with `install`, `mode shadow|explain|auto` and `uninstall`, and write a README a stranger can follow in two minutes. *Done when* a clean install on a second project works using only the README.
 
+## Design decisions (grilled 2026-09-28)
+
+- **Where it runs.** The gate runs in all repos. Every send is redacted: built-in patterns cover tokens, keys, emails and URLs with credentials, and the user's terms come from `~/.config/jev-gate/redact.txt` (one per line, never committed).
+- **When it calls Jev.** Only when `permission_mode` is `default` or `acceptEdits`. It never loosens `auto`, `dontAsk`, `plan` or `bypassPermissions`. It skips commands that already match the user's allow rules in settings; mismatches there are harmless, costing at most a wasted call.
+- **Deny-list (broad).** A hit means no Jev call and an `ask` with a reason; it never denies. The list covers `rm -r`, pipes into `sh`/`bash`/`python`/`node`, `sudo`, `eval`, and anything touching `~/.claude`, `~/.ssh` or shell rc files. `git push` is **not** on the list, because the user pushes manually and `network = none` already keeps it from being auto-allowed.
+- **Workspace.** The narrower of the git toplevel of `cwd` and `CLAUDE_PROJECT_DIR`, falling back to `cwd`. Writes to `/tmp` and `$TMPDIR` also count as workspace.
+- **Tiered thresholds.** These are starting values in config, and the eval tunes them.
+  - `effect`: P(read_only) ≥ 0.85 for read-only calls, P(writes_workspace) ≥ 0.95 for writes.
+  - `network`: P(none) ≥ 0.95.
+  - `injection`: P(clean) ≥ 0.99.
+  - All of them must pass.
+- **Opaque commands** (`npm test`, `make x`, `./script.sh`, `bash -c`). Jev judges the command text with the normal thresholds. This is the user's choice, made knowing the risk. The eval must include malicious hidden cases, such as a `package.json` whose `test` script is `curl … | sh`.
+- **Allow cache.** Built in milestone 3. It stores only `allow` verdicts, keyed on hash(command, workspace root, model), with a 7-day TTL. Opaque commands are cached the same way.
+- **Labelling.** Claude drafts all ~200 labels, and the user reviews the borderline and dangerous ones.
+- **Going auto.** Permitted as soon as the milestone 2 eval shows 100% allow precision. The user flips it manually.
+
+## Hook contract (verified against docs 2026-09-28)
+
+- `PreToolUse` fires on every call in every permission mode, and nothing tells the hook whether the call would have prompted.
+- A hook `allow` doesn't bypass the user's `deny` rules. Printing nothing and exiting 0 means no decision. A hook timeout falls back to the normal permission flow. Exit 2 blocks the call, so never use it.
+- There is no "user approved" event. An approval shows up as a `PostToolUse` or `PostToolUseFailure` with the same `tool_use_id` as a call the gate asked about. No event means the call was denied.
+- To verify in milestone 1:
+  - whether the user sees `permissionDecisionReason` in the prompt; if not, use `systemMessage`
+  - whether a hook `allow` also skips the user's `ask` rules
+  - that the `ask` value is honoured
+
 ## Open decisions for the user
 
-- **Data leaving the machine.** Every command, plus its cwd, is sent to TypeSafe. Redact tokens, keys, emails and known client names before sending, and ask the user whether sending command text to an external API is acceptable on a Visa machine before running `auto` on work repos.
 - **Scope after Bash.** The candidates are `WebFetch` domains and MCP tool calls. Decide after milestone 4 based on which prompts show up most in the logs.
