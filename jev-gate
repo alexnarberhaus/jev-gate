@@ -231,6 +231,97 @@ def cmd_mode(args):
     return 0
 
 
+def _link_into_path(bin_dir=None):
+    """Symlink this script into bin_dir (default ~/.local/bin). Returns (link, created, on_path)."""
+    script = Path(__file__).resolve()
+    bin_dir = Path(bin_dir) if bin_dir else Path.home() / ".local/bin"
+    bin_dir.mkdir(parents=True, exist_ok=True)
+    link = bin_dir / "jev-gate"
+    created = not (link.is_symlink() and link.resolve() == script)
+    if created:
+        if link.exists() or link.is_symlink():
+            link.unlink()
+        link.symlink_to(script)
+    on_path = str(bin_dir) in (os.environ.get("PATH") or "").split(os.pathsep)
+    return link, created, on_path
+
+
+def _unlink_from_path(bin_dir=None):
+    """Remove our symlink from bin_dir (default ~/.local/bin), but only if it's actually ours."""
+    script = Path(__file__).resolve()
+    bin_dir = Path(bin_dir) if bin_dir else Path.home() / ".local/bin"
+    link = bin_dir / "jev-gate"
+    removed = link.is_symlink() and link.resolve() == script
+    if removed:
+        link.unlink()
+    return link, removed
+
+
+def cmd_install(args):
+    color = sys.stdout.isatty() and not args.no_color
+    ok = f"{GREEN}✓{RESET}" if color else "✓"
+    skip = f"{DIM}·{RESET}" if color else "·"
+
+    config_dir = gate.CONFIG_DIR
+    config_dir.mkdir(parents=True, exist_ok=True)
+    env_path = config_dir / ".env"
+    if load_key(env_path):
+        print(f"{skip} API key already set ({env_path})")
+    elif args.no_prompt or not sys.stdin.isatty():
+        print(f"  add TYPESAFE_API_KEY to {env_path} before switching out of shadow mode")
+    else:
+        import getpass
+        key = getpass.getpass("Paste your TypeSafe API key (input hidden, leave blank to skip): ").strip()
+        if key:
+            env_path.write_text(f"TYPESAFE_API_KEY={key}\n")
+            env_path.chmod(0o600)
+            print(f"{ok} wrote {env_path}")
+        else:
+            print(f"  add TYPESAFE_API_KEY to {env_path} before switching out of shadow mode")
+
+    link, created, on_path = _link_into_path()
+    if created:
+        print(f"{ok} linked {link} -> {Path(__file__).resolve()}")
+    else:
+        print(f"{skip} {link} already points here")
+    if not on_path:
+        print(f"  {link.parent} isn't on your PATH — add this to your shell rc:\n"
+              f'    export PATH="{link.parent}:$PATH"')
+
+    if gate.register_hook():
+        print(f"{ok} registered the PreToolUse hook in ~/.claude/settings.json")
+    else:
+        print(f"{skip} hook already registered")
+
+    if not (config_dir / "config.json").exists():
+        gate.set_mode("shadow", config_dir=config_dir)
+        print(f"{ok} mode set to shadow (observing only — nothing is auto-approved yet)")
+
+    print("\nrun `jev-gate status` to check, or `jev-gate` to watch decisions live.")
+    return 0
+
+
+def cmd_uninstall(args):
+    color = sys.stdout.isatty() and not args.no_color
+    ok = f"{GREEN}✓{RESET}" if color else "✓"
+    skip = f"{DIM}·{RESET}" if color else "·"
+
+    if gate.unregister_hook():
+        print(f"{ok} removed the PreToolUse hook from ~/.claude/settings.json")
+    else:
+        print(f"{skip} hook wasn't registered")
+
+    link, removed = _unlink_from_path()
+    if removed:
+        print(f"{ok} removed {link}")
+    else:
+        print(f"{skip} no symlink at {link} to remove")
+
+    print(f"\nleft in place, in case you reinstall: {gate.CONFIG_DIR} (key, redact list, config) "
+          f"and {journal.STATE_DIR} (the decision log). Delete those yourself if you want them gone.")
+    return 0
+
+
 def cmd_status(args):
     color = sys.stdout.isatty() and not args.no_color
     ok_c, bad_c, dim_c = (GREEN, RESET) if color else ("", ""), (RED, RESET) if color else ("", ""), (DIM, RESET) if color else ("", "")
@@ -256,11 +347,11 @@ def cmd_status(args):
 
     print(f"\n  {BOLD}{CYAN}JEV-GATE{RESET}  {dim_c[0]}status{dim_c[1]}\n" if color else "\n  JEV-GATE status\n")
     print(row("hook", "yes" if installed else "no", installed,
-              "registered in ~/.claude/settings.json" if installed else "not found — see CLAUDE.md to add it"))
+              "registered in ~/.claude/settings.json" if installed else "not found — run `jev-gate install`"))
     print(row("mode", config.mode if config_ok else "?", config_ok,
               MODE_BLURB.get(config.mode, config.mode) if config_ok else f"config error: {config_error}"))
     print(row("api key", "yes" if key_ok else "no", key_ok,
-              str(config.config_dir / ".env") if key_ok and config_ok else "missing — see CLAUDE.md to add ~/.config/jev-gate/.env"))
+              str(config.config_dir / ".env") if key_ok and config_ok else "missing — run `jev-gate install`"))
     print(row("log", str(count), count > 0, f"decision(s) logged · last: {last_detail}"))
     print()
     return 0 if installed and config_ok and key_ok else 1
@@ -286,6 +377,15 @@ def build_parser():
     mode_p.add_argument("value", nargs="?", choices=list(gate.MODES), help="new mode; omit to show the current one")
     mode_p.add_argument("--no-color", action="store_true")
     mode_p.set_defaults(func=cmd_mode)
+
+    install_p = sub.add_parser("install", help="wire up the hook, a PATH symlink, and the API key")
+    install_p.add_argument("--no-color", action="store_true")
+    install_p.add_argument("--no-prompt", action="store_true", help="don't interactively ask for the API key")
+    install_p.set_defaults(func=cmd_install)
+
+    uninstall_p = sub.add_parser("uninstall", help="remove the hook and the PATH symlink (keeps your config and log)")
+    uninstall_p.add_argument("--no-color", action="store_true")
+    uninstall_p.set_defaults(func=cmd_uninstall)
     return parser
 
 

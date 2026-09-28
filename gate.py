@@ -96,11 +96,15 @@ def _settings_files(project_dir):
     return files
 
 
-def hook_installed():
-    """Whether ~/.claude/settings.json actually registers this gate.py as a PreToolUse Bash hook."""
+def _global_settings_path(settings_path=None):
+    return Path(settings_path) if settings_path is not None else Path.home() / ".claude/settings.json"
+
+
+def hook_installed(settings_path=None):
+    """Whether settings.json actually registers this gate.py as a PreToolUse Bash hook."""
     this_script = str(Path(__file__).resolve())
     try:
-        hooks = json.loads((Path.home() / ".claude/settings.json").read_text()).get("hooks") or {}
+        hooks = json.loads(_global_settings_path(settings_path).read_text()).get("hooks") or {}
     except (FileNotFoundError, ValueError):
         return False
     for group in hooks.get("PreToolUse") or []:
@@ -109,6 +113,48 @@ def hook_installed():
         if any(this_script in (h.get("command") or "") for h in group.get("hooks") or []):
             return True
     return False
+
+
+def register_hook(settings_path=None):
+    """Add gate.py as a PreToolUse Bash hook. Idempotent: does nothing if already registered.
+
+    Merges into whatever's already there rather than overwriting it — other hooks, permission
+    rules, anything else in the file are left exactly as they were.
+    """
+    path = _global_settings_path(settings_path)
+    if hook_installed(path):
+        return False
+    path.parent.mkdir(parents=True, exist_ok=True)
+    raw = json.loads(path.read_text()) if path.exists() else {}
+    entry = {"type": "command", "command": f"{sys.executable} {Path(__file__).resolve()}", "timeout": 5}
+    pre = raw.setdefault("hooks", {}).setdefault("PreToolUse", [])
+    for group in pre:
+        if group.get("matcher") == "Bash":
+            group.setdefault("hooks", []).append(entry)
+            break
+    else:
+        pre.append({"matcher": "Bash", "hooks": [entry]})
+    path.write_text(json.dumps(raw, indent=2) + "\n")
+    return True
+
+
+def unregister_hook(settings_path=None):
+    """Remove gate.py's own PreToolUse hook entry, if present. Leaves everything else untouched."""
+    path = _global_settings_path(settings_path)
+    if not hook_installed(path):
+        return False
+    raw = json.loads(path.read_text())
+    this_script = str(Path(__file__).resolve())
+    for group in raw["hooks"]["PreToolUse"]:
+        if group.get("matcher") == "Bash":
+            group["hooks"] = [h for h in group.get("hooks") or [] if this_script not in (h.get("command") or "")]
+    raw["hooks"]["PreToolUse"] = [g for g in raw["hooks"]["PreToolUse"] if g.get("hooks")]
+    if not raw["hooks"]["PreToolUse"]:
+        del raw["hooks"]["PreToolUse"]
+    if not raw["hooks"]:
+        del raw["hooks"]
+    path.write_text(json.dumps(raw, indent=2) + "\n")
+    return True
 
 
 def load_rules(project_dir):

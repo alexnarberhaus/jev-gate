@@ -171,6 +171,113 @@ class Hotkeys(TestCase):
             self.assertIsNone(cli.start_hotkeys(self.config_dir, color=False))
 
 
+class Install(TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.config_dir = Path(self.tmp.name) / "config"
+        self.addCleanup(self.tmp.cleanup)
+        patches = [mock.patch.object(gate, "CONFIG_DIR", self.config_dir),
+                   mock.patch.object(cli, "_link_into_path", lambda: (Path("/fake/bin/jev-gate"), True, True))]
+        for p in patches:
+            p.start()
+            self.addCleanup(p.stop)
+
+    def run_install(self, no_prompt=True, stdin_tty=False, key_input="", register_result=True):
+        out = io.StringIO()
+        stdin = mock.Mock()
+        stdin.isatty.return_value = stdin_tty
+        with mock.patch("sys.stdout", out), mock.patch("sys.stdin", stdin), \
+             mock.patch.object(cli.gate, "register_hook", return_value=register_result) as register, \
+             mock.patch("getpass.getpass", return_value=key_input):
+            code = cli.cmd_install(argparse_namespace(no_color=True, no_prompt=no_prompt))
+        return code, out.getvalue(), register
+
+    def test_fresh_install_registers_hook_and_defaults_to_shadow(self):
+        code, text, register = self.run_install()
+        self.assertEqual(code, 0)
+        register.assert_called_once()
+        self.assertIn("shadow", text)
+        self.assertEqual(gate.Config.load(self.config_dir).mode, "shadow")
+
+    def test_no_prompt_skips_asking_for_a_key(self):
+        with mock.patch("getpass.getpass") as getpass_mock:
+            _, text, _ = self.run_install(no_prompt=True)
+            getpass_mock.assert_not_called()
+        self.assertIn("add TYPESAFE_API_KEY", text)
+        self.assertFalse((self.config_dir / ".env").exists())
+
+    def test_non_tty_stdin_skips_asking_even_without_no_prompt(self):
+        _, text, _ = self.run_install(no_prompt=False, stdin_tty=False)
+        self.assertFalse((self.config_dir / ".env").exists())
+
+    def test_prompts_for_key_on_a_real_tty_and_writes_it(self):
+        _, text, _ = self.run_install(no_prompt=False, stdin_tty=True, key_input="sk-test-123")
+        self.assertIn(str(self.config_dir / ".env"), text)
+        self.assertEqual((self.config_dir / ".env").read_text().strip(), "TYPESAFE_API_KEY=sk-test-123")
+
+    def test_blank_key_input_is_treated_like_skipping(self):
+        _, text, _ = self.run_install(no_prompt=False, stdin_tty=True, key_input="   ")
+        self.assertFalse((self.config_dir / ".env").exists())
+        self.assertIn("add TYPESAFE_API_KEY", text)
+
+    def test_existing_key_is_never_reprompted(self):
+        self.config_dir.mkdir(parents=True)
+        (self.config_dir / ".env").write_text("TYPESAFE_API_KEY=already-here\n")
+        with mock.patch("getpass.getpass") as getpass_mock:
+            self.run_install(no_prompt=False, stdin_tty=True)
+            getpass_mock.assert_not_called()
+
+    def test_existing_config_mode_is_not_overwritten(self):
+        gate.set_mode("explain", config_dir=self.config_dir)
+        self.run_install()
+        self.assertEqual(gate.Config.load(self.config_dir).mode, "explain")
+
+    def test_already_registered_hook_is_reported_not_re_added(self):
+        _, text, register = self.run_install(register_result=False)
+        register.assert_called_once()
+        self.assertIn("already registered", text)
+
+
+class Uninstall(TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.config_dir = Path(self.tmp.name) / "config"
+        self.state_dir = Path(self.tmp.name) / "state"
+        self.addCleanup(self.tmp.cleanup)
+        patches = [mock.patch.object(gate, "CONFIG_DIR", self.config_dir),
+                   mock.patch.object(journal, "STATE_DIR", self.state_dir)]
+        for p in patches:
+            p.start()
+            self.addCleanup(p.stop)
+
+    def run_uninstall(self, unregister_result=True, unlink_result=(Path("/fake/bin/jev-gate"), True)):
+        out = io.StringIO()
+        with mock.patch("sys.stdout", out), \
+             mock.patch.object(cli.gate, "unregister_hook", return_value=unregister_result), \
+             mock.patch.object(cli, "_unlink_from_path", return_value=unlink_result):
+            code = cli.cmd_uninstall(argparse_namespace(no_color=True))
+        return code, out.getvalue()
+
+    def test_reports_hook_removed_and_symlink_removed(self):
+        code, text = self.run_uninstall()
+        self.assertEqual(code, 0)
+        self.assertIn("removed the PreToolUse hook", text)
+        self.assertIn("removed", text)
+
+    def test_reports_hook_was_not_registered(self):
+        _, text = self.run_uninstall(unregister_result=False)
+        self.assertIn("wasn't registered", text)
+
+    def test_reports_no_symlink_to_remove(self):
+        _, text = self.run_uninstall(unlink_result=(Path("/fake/bin/jev-gate"), False))
+        self.assertIn("no symlink", text)
+
+    def test_mentions_what_is_left_behind_for_a_reinstall(self):
+        _, text = self.run_uninstall()
+        self.assertIn(str(self.config_dir), text)
+        self.assertIn(str(self.state_dir), text)
+
+
 class Mode(TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -232,6 +339,14 @@ class Parser(TestCase):
     def test_mode_rejects_an_unknown_value(self):
         with self.assertRaises(SystemExit), mock.patch("sys.stderr", io.StringIO()):
             cli.build_parser().parse_args(["mode", "yolo"])
+
+    def test_install_and_uninstall_subcommands_parse(self):
+        args = cli.build_parser().parse_args(["install"])
+        self.assertEqual((args.func, args.no_prompt), (cli.cmd_install, False))
+        args = cli.build_parser().parse_args(["install", "--no-prompt"])
+        self.assertTrue(args.no_prompt)
+        args = cli.build_parser().parse_args(["uninstall"])
+        self.assertEqual(args.func, cli.cmd_uninstall)
 
     def test_main_with_no_argv_runs_watch(self):
         with mock.patch.object(cli, "cmd_watch", return_value=0) as watch:

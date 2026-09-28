@@ -345,5 +345,67 @@ class Deadline(GateTest):
         self.assertAlmostEqual(seen["deadline"], started + 1.5, places=3)
 
 
+class HookRegistration(unittest.TestCase):
+    """These never touch the real ~/.claude/settings.json — always a temp path."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.settings = Path(self.tmp.name) / "settings.json"
+        self.addCleanup(self.tmp.cleanup)
+
+    def test_not_installed_when_file_is_missing_or_empty(self):
+        self.assertFalse(gate.hook_installed(self.settings))
+        self.settings.write_text("{}")
+        self.assertFalse(gate.hook_installed(self.settings))
+
+    def test_register_then_detected_as_installed(self):
+        self.assertTrue(gate.register_hook(self.settings))
+        self.assertTrue(gate.hook_installed(self.settings))
+        raw = json.loads(self.settings.read_text())
+        [group] = raw["hooks"]["PreToolUse"]
+        self.assertEqual(group["matcher"], "Bash")
+        self.assertIn(str(Path(gate.__file__).resolve()), group["hooks"][0]["command"])
+
+    def test_register_is_idempotent(self):
+        gate.register_hook(self.settings)
+        self.assertFalse(gate.register_hook(self.settings))  # already there: no-op, reports False
+        raw = json.loads(self.settings.read_text())
+        self.assertEqual(len(raw["hooks"]["PreToolUse"][0]["hooks"]), 1)  # not duplicated
+
+    def test_register_merges_into_existing_bash_group_and_leaves_other_hooks_alone(self):
+        self.settings.write_text(json.dumps({
+            "permissions": {"allow": ["Bash(git:*)"]},
+            "hooks": {"PreToolUse": [{"matcher": "Bash", "hooks": [{"type": "command", "command": "some-other-hook"}]}],
+                      "SessionStart": [{"matcher": "", "hooks": [{"type": "command", "command": "startup.sh"}]}]},
+        }))
+        gate.register_hook(self.settings)
+        raw = json.loads(self.settings.read_text())
+        self.assertEqual(raw["permissions"], {"allow": ["Bash(git:*)"]})
+        self.assertEqual(raw["hooks"]["SessionStart"][0]["hooks"][0]["command"], "startup.sh")
+        commands = [h["command"] for h in raw["hooks"]["PreToolUse"][0]["hooks"]]
+        self.assertEqual(len(commands), 2)
+        self.assertIn("some-other-hook", commands)
+
+    def test_unregister_removes_only_our_entry(self):
+        self.settings.write_text(json.dumps({
+            "hooks": {"PreToolUse": [{"matcher": "Bash", "hooks": [{"type": "command", "command": "some-other-hook"}]}]}}))
+        gate.register_hook(self.settings)
+        self.assertTrue(gate.unregister_hook(self.settings))
+        self.assertFalse(gate.hook_installed(self.settings))
+        raw = json.loads(self.settings.read_text())
+        self.assertEqual([h["command"] for h in raw["hooks"]["PreToolUse"][0]["hooks"]], ["some-other-hook"])
+
+    def test_unregister_cleans_up_empty_groups_and_keys(self):
+        gate.register_hook(self.settings)
+        gate.unregister_hook(self.settings)
+        raw = json.loads(self.settings.read_text())
+        self.assertNotIn("hooks", raw)
+
+    def test_unregister_when_not_installed_is_a_no_op(self):
+        self.assertFalse(gate.unregister_hook(self.settings))
+        self.settings.write_text(json.dumps({"hooks": {"PreToolUse": [{"matcher": "Bash", "hooks": []}]}}))
+        self.assertFalse(gate.unregister_hook(self.settings))
+
+
 if __name__ == "__main__":
     unittest.main()
