@@ -9,13 +9,11 @@ problem raises JudgeError; callers never see a half-parsed answer.
 import json
 import os
 import re
-import ssl
 import threading
 import time
-import urllib.error
-import urllib.request
-from dataclasses import dataclass, field
 from pathlib import Path
+
+# ssl and urllib are imported where used: they cost ~150 ms, and most hook runs never reach the network.
 
 ENDPOINT = "https://api.typesafe.ai/v1/systemone"
 DEFAULT_MODEL = "jev-1.13.0"
@@ -69,14 +67,14 @@ class JudgeError(Exception):
     """Jev could not give a usable answer. The reason is short and safe to log."""
 
 
-@dataclass
 class Assessment:
-    probabilities: dict  # question -> {option: p}
-    latency_ms: float
-    input_tokens: int = 0
-    output_tokens: int = 0
-    model: str = DEFAULT_MODEL
-    sent_state: dict = field(default_factory=dict)  # exactly what left the machine (redacted)
+    def __init__(self, probabilities, latency_ms, input_tokens=0, output_tokens=0, model=DEFAULT_MODEL, sent_state=None):
+        self.probabilities = probabilities  # question -> {option: p}
+        self.latency_ms = latency_ms
+        self.input_tokens = input_tokens
+        self.output_tokens = output_tokens
+        self.model = model
+        self.sent_state = sent_state or {}  # exactly what left the machine (redacted)
 
     @property
     def cost_usd(self):
@@ -112,7 +110,8 @@ def redact(text, terms=()):
     for pattern, replacement in _SECRET_PATTERNS:
         text = pattern.sub(replacement, text)
     for term in terms:
-        text = re.sub(re.escape(term), "[PRIVATE]", text, flags=re.IGNORECASE)
+        # Word boundaries, or a short term like "ING" also redacts the inside of "settings".
+        text = re.sub(rf"\b{re.escape(term)}\b", "[PRIVATE]", text, flags=re.IGNORECASE)
     return text
 
 
@@ -147,6 +146,7 @@ def tls_context():
     """One verified context per process; building it is the expensive part."""
     global _tls
     if _tls is None:
+        import ssl
         cafile = os.environ.get("JEV_GATE_CA_BUNDLE") or os.environ.get("SSL_CERT_FILE")
         if not cafile and CA_FALLBACK.exists():
             cafile = str(CA_FALLBACK)
@@ -155,6 +155,7 @@ def tls_context():
 
 
 def _post(body, key, timeout):
+    import urllib.request
     request = urllib.request.Request(
         ENDPOINT,
         data=json.dumps(body).encode(),
@@ -167,6 +168,8 @@ def _post(body, key, timeout):
 
 def _post_with_deadline(body, key, seconds):
     """urlopen's timeout is per socket operation, so enforce the total budget with a thread."""
+    import ssl
+    import urllib.error
     box = {}
 
     def work():

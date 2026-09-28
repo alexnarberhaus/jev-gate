@@ -10,6 +10,7 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import gate  # noqa: E402
+import journal  # noqa: E402
 from judge import Assessment, JudgeError  # noqa: E402
 
 SAFE = {"effect": {"read_only": 0.99, "writes_workspace": 0.01, "writes_outside": 0, "destructive": 0},
@@ -41,7 +42,10 @@ class GateTest(unittest.TestCase):
         self.root = Path(self.tmp.name).resolve()
         (self.root / ".git").mkdir()
         self.settings = self.root / "settings.json"
+        self.spawned = []
         patches = [mock.patch.object(gate, "_settings_files", lambda project_dir: [self.settings]),
+                   mock.patch.object(gate, "spawn_observer", self.spawned.append),
+                   mock.patch.object(journal, "STATE_DIR", self.root / "state"),
                    mock.patch.dict(os.environ, {}, clear=False)]
         for p in patches:
             p.start()
@@ -59,6 +63,10 @@ class GateTest(unittest.TestCase):
     def run_gate(self, event, judge=None, mode="auto", **config):
         judge = judge or FakeJudge()
         return gate.run(event, gate.Config(mode=mode, config_dir=self.root, **config), judge), judge
+
+    def log(self):
+        path = journal.path()
+        return [json.loads(l) for l in path.read_text().splitlines()] if path.exists() else []
 
     def assertAllowed(self, output):
         self.assertEqual(output["hookSpecificOutput"]["permissionDecision"], "allow")
@@ -173,6 +181,9 @@ class FailToPrompt(GateTest):
         output, judge = self.run_gate(self.event("git status && ls -la"))
         self.assertIsNone(output)
         self.assertEqual(judge.calls, [])
+        self.assertEqual(len(self.spawned), 1)  # judged in the background instead
+        self.run_gate(self.event("git status"), observe_allowed=False)
+        self.assertEqual(len(self.spawned), 1)
         # Only partly allowed: Jev still judges it.
         _, judge = self.run_gate(self.event("git status && cat x"))
         self.assertEqual(len(judge.calls), 1)
@@ -190,10 +201,11 @@ class FailToPrompt(GateTest):
 
 
 class Modes(GateTest):
-    def test_shadow_prints_nothing(self):
+    def test_shadow_prints_nothing_and_never_waits_on_jev(self):
         output, judge = self.run_gate(self.event(), mode="shadow")
         self.assertIsNone(output)
-        self.assertEqual(len(judge.calls), 1)  # still judged, for the log
+        self.assertEqual(judge.calls, [])
+        self.assertEqual(self.spawned, [self.event()])
 
     def test_explain_never_allows(self):
         output, _ = self.run_gate(self.event(), mode="explain")
@@ -208,15 +220,67 @@ class Modes(GateTest):
         self.assertEqual(gate.Config.load(self.root).mode, "explain")
 
 
+class Logging(GateTest):
+    def test_foreground_decision_is_logged(self):
+        self.run_gate(self.event("echo token=abc123secret"))
+        [entry] = self.log()
+        self.assertEqual((entry["decision"], entry["observed"], entry["mode"]), ("allow", False, "auto"))
+        self.assertNotIn("abc123secret", entry["command"])
+        self.assertEqual(len(entry["command_sha256"]), 64)
+        self.assertEqual(entry["probabilities"], SAFE)
+
+    def test_observer_ignores_allow_rules_and_logs(self):
+        self.settings.write_text(json.dumps({"permissions": {"allow": ["Bash"]}}))
+        judge = FakeJudge()
+        gate.observe(self.event("cat README.md"), gate.Config(mode="shadow", config_dir=self.root), judge)
+        self.assertEqual(len(judge.calls), 1)
+        [entry] = self.log()
+        self.assertEqual((entry["observed"], entry["rules"], entry["decision"]), (True, "allow", "allow"))
+
+    def test_observer_logs_short_circuits_and_errors(self):
+        config = gate.Config(mode="shadow", config_dir=self.root)
+        gate.observe(self.event("sudo ls"), config, FakeJudge())
+        gate.observe(self.event("ls"), config, FakeJudge(error=JudgeError("timeout")))
+        reasons = [e["reason"] for e in self.log()]
+        self.assertIn("deny-list", reasons[0])
+        self.assertIn("timeout", reasons[1])
+
+    def test_log_failure_never_changes_the_decision(self):
+        with mock.patch.object(journal, "append", side_effect=OSError("disk full")):
+            self.assertAllowed(self.run_gate(self.event())[0])
+
+
+class Observer(unittest.TestCase):
+    """Real child process: the hook returns at once and the child writes the log."""
+
+    def test_spawned_child_logs_without_blocking(self):
+        with tempfile.TemporaryDirectory() as d:
+            env = {k: v for k, v in os.environ.items() if k not in ("TYPESAFE_API_KEY", "CLAUDE_PROJECT_DIR")}
+            env.update(JEV_GATE_CONFIG_DIR=d, JEV_GATE_STATE_DIR=d)
+            event = {"tool_name": "Bash", "tool_input": {"command": "ls"}, "cwd": d, "permission_mode": "default"}
+            with mock.patch.dict(os.environ, env, clear=True):
+                started = time.monotonic()
+                gate.spawn_observer(event)
+                self.assertLess(time.monotonic() - started, 0.2)
+            log = Path(d) / "decisions.jsonl"
+            for _ in range(50):
+                if log.exists() and log.read_text().strip():
+                    break
+                time.sleep(0.1)
+            entry = json.loads(log.read_text().splitlines()[0])
+            self.assertTrue(entry["observed"])
+            self.assertIn("no API key", entry["reason"])
+
+
 class Main(GateTest):
     def call_main(self, stdin, run=None):
         out = io.StringIO()
         with mock.patch("sys.stdin", io.StringIO(stdin)), mock.patch("sys.stdout", out):
             if run:
                 with mock.patch.object(gate, "run", run):
-                    code = gate.main()
+                    code = gate.main([])
             else:
-                code = gate.main()
+                code = gate.main([])
         return code, out.getvalue()
 
     def test_garbage_stdin_is_silent(self):
@@ -227,6 +291,14 @@ class Main(GateTest):
         def boom(*a, **k):
             raise RuntimeError("bug")
         self.assertEqual(self.call_main(json.dumps(self.event()), boom), (0, ""))
+
+    def test_observe_flag_prints_nothing(self):
+        with mock.patch.object(gate, "observe") as observe:
+            out = io.StringIO()
+            with mock.patch("sys.stdin", io.StringIO(json.dumps(self.event()))), mock.patch("sys.stdout", out):
+                self.assertEqual(gate.main(["--observe"]), 0)
+        self.assertEqual(out.getvalue(), "")
+        observe.assert_called_once()
 
     def test_allow_is_printed_as_json(self):
         allow = {"hookSpecificOutput": {"permissionDecision": "allow"}}

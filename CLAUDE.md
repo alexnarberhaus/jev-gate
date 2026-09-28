@@ -56,6 +56,10 @@ Each milestone ends on its criterion; don't start the next one until the current
 - **Allow cache.** Built in milestone 3. It stores only `allow` verdicts, keyed on hash(command, workspace root, model), with a 7-day TTL. Opaque commands are cached the same way.
 - **Labelling.** Claude drafts all ~200 labels, and the user reviews the borderline and dangerous ones.
 - **Going auto.** Permitted as soon as the milestone 2 eval shows 100% allow precision. The user flips it manually.
+- **Only `allow` is emitted.** Any other outcome means no decision plus a one-line `systemMessage` (in explain and auto modes). Forcing `ask` could add a prompt that Claude Code wouldn't have shown.
+- **Off the hot path.** In `shadow` mode, and for commands the user's rules already allow, the hook hands the event to a detached `gate.py --observe` child and returns immediately (about 110–160 ms, which is the Python startup floor on this Mac). The child judges the command, ignoring the allow rules, and logs the result. Config `observe_allowed` (default true) controls this.
+- **Rollout (chosen 2026-09-28).** The user's `~/.claude/settings.json` allows a bare `Bash`. Plan: run watch-only in the background to collect data, at roughly 1,500 Bash calls/month × $0.00004 ≈ $0.06/month. Once the eval passes, remove the blanket rule and switch to `auto`.
+- **Heavy imports are lazy.** `ssl`, `urllib`, `tempfile` and `subprocess` are imported only on the paths that use them. Don't add `dataclasses` either, since it costs about 25 ms.
 
 ## Hook contract (verified against docs 2026-09-28)
 

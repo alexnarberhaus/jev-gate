@@ -8,20 +8,23 @@ Any error anywhere means silence. The gate can remove prompts, never add them.
 
     run(event, config, judge) -> dict | None     # the whole policy, pure enough to test
     main()                                        # stdin/stdout wrapper, never raises
+
+Watch-only mode and already-allowed commands can't change the output, so they are
+judged by a detached child (`gate.py --observe`) and Claude Code never waits on Jev.
 """
 
 import fnmatch
+import hashlib
 import json
 import os
 import re
 import sys
-import tempfile
 import time
-from dataclasses import dataclass, field
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from judge import DEFAULT_MODEL, Judge, JudgeError  # noqa: E402
+import journal  # noqa: E402
+from judge import DEFAULT_MODEL, Judge, JudgeError, redact  # noqa: E402
 
 CONFIG_DIR = Path(os.environ.get("JEV_GATE_CONFIG_DIR", Path.home() / ".config/jev-gate"))
 MODES = ("shadow", "explain", "auto")
@@ -31,16 +34,19 @@ MANAGED_SETTINGS = Path("/Library/Application Support/ClaudeCode")
 
 # --- config ----------------------------------------------------------------
 
-@dataclass
 class Config:
-    mode: str = "shadow"
-    model: str = DEFAULT_MODEL
-    budget_s: float = 1.5
-    read_only: float = 0.85         # P(read_only)
-    writes_workspace: float = 0.95  # P(read_only) + P(writes_workspace)
-    network_none: float = 0.95
-    injection_clean: float = 0.99
-    config_dir: Path = field(default=CONFIG_DIR)
+    def __init__(self, mode="shadow", model=DEFAULT_MODEL, budget_s=1.5, observe_allowed=True,
+                 read_only=0.85, writes_workspace=0.95, network_none=0.95, injection_clean=0.99,
+                 config_dir=CONFIG_DIR):
+        self.mode = mode
+        self.model = model
+        self.budget_s = budget_s
+        self.observe_allowed = observe_allowed    # judge already-allowed commands in the background, for the log
+        self.read_only = read_only                # P(read_only)
+        self.writes_workspace = writes_workspace  # P(read_only) + P(writes_workspace)
+        self.network_none = network_none
+        self.injection_clean = injection_clean
+        self.config_dir = Path(config_dir)
 
     @classmethod
     def load(cls, config_dir=CONFIG_DIR):
@@ -50,7 +56,7 @@ class Config:
         raw = json.loads(path.read_text()) if path.exists() else {}
         thresholds = raw.pop("thresholds", {})
         for name, value in {**raw, **thresholds}.items():
-            if name not in ("mode", "model", "budget_s", "read_only", "writes_workspace", "network_none", "injection_clean"):
+            if name not in ("mode", "model", "budget_s", "observe_allowed", "read_only", "writes_workspace", "network_none", "injection_clean"):
                 raise ValueError(f"unknown config key {name}")
             setattr(config, name, value)
         if os.environ.get("JEV_GATE_MODE"):
@@ -185,38 +191,45 @@ def workspace_dirs(cwd, project_dir):
     git_root = _git_root(cwd)
     candidates = [d for d in (git_root, project_dir) if d is not None and (cwd == d or d in cwd.parents)]
     root = max(candidates, key=lambda d: len(d.parts)) if candidates else cwd
+    import tempfile  # ~28 ms; only needed on the Jev path
     temps = {Path("/tmp").resolve(), Path(tempfile.gettempdir()).resolve()}
     return [str(root)] + sorted(str(t) for t in temps)
 
 
 # --- policy ----------------------------------------------------------------
 
-@dataclass
 class Verdict:
-    allow: bool
-    reason: str
-    consulted_jev: bool = False
+    def __init__(self, allow, reason, rules=None, assessment=None, background=False):
+        self.allow = allow
+        self.reason = reason
+        self.rules = rules              # what the user's own rules say: allow / ask / deny / None
+        self.assessment = assessment    # judge.Assessment when Jev was consulted
+        self.background = background    # the verdict can't change the output: judge it off the hot path
 
 
-def judge_verdict(a, config):
+def judge_verdict(a, config, rules=None):
     ro = a.p("effect", "read_only")
     safe = a.p("effect", "read_only", "writes_workspace")
     net = a.p("network", "none")
     clean = a.p("injection", "clean")
     summary = f"read-only {ro:.2f}, workspace-safe {safe:.2f}, no-network {net:.2f}, clean {clean:.2f}"
     if clean < config.injection_clean:
-        return Verdict(False, f"possible injection ({summary})", True)
+        return Verdict(False, f"possible injection ({summary})", rules, a)
     if net < config.network_none:
-        return Verdict(False, f"may use the network ({summary})", True)
+        return Verdict(False, f"may use the network ({summary})", rules, a)
     if ro >= config.read_only:
-        return Verdict(True, f"read-only ({summary})", True)
+        return Verdict(True, f"read-only ({summary})", rules, a)
     if safe >= config.writes_workspace:
-        return Verdict(True, f"writes only the workspace ({summary})", True)
-    return Verdict(False, f"not confident it's harmless ({summary})", True)
+        return Verdict(True, f"writes only the workspace ({summary})", rules, a)
+    return Verdict(False, f"not confident it's harmless ({summary})", rules, a)
 
 
-def evaluate(event, config, judge, deadline):
-    """The policy. Returns a Verdict, or None when the gate should stay out entirely."""
+def evaluate(event, config, judge, deadline, observing=False):
+    """The policy. Returns a Verdict, or None when the gate should stay out entirely.
+
+    `observing` is the background pass: it ignores the user's allow rules, so we learn
+    what the gate would have done for commands that never reach a prompt today.
+    """
     if event.get("hook_event_name", "PreToolUse") != "PreToolUse" or event.get("tool_name") != "Bash":
         return None
     if event.get("permission_mode") not in PROMPTING_PERMISSION_MODES:
@@ -228,23 +241,25 @@ def evaluate(event, config, judge, deadline):
     project_dir = Path(os.environ["CLAUDE_PROJECT_DIR"]).resolve() if os.environ.get("CLAUDE_PROJECT_DIR") else None
 
     rules = rule_verdict(command, load_rules(project_dir or _git_root(cwd) or cwd))
-    if rules == "allow":
-        return None  # Claude Code will allow it anyway; don't spend a call.
+    if not observing and (config.mode == "shadow" or rules == "allow"):
+        if rules == "allow" and not config.observe_allowed:
+            return None
+        return Verdict(False, "judged in the background", rules, background=True)
     if rules in ("ask", "deny"):
-        return Verdict(False, f"matches your {rules} rules")
+        return Verdict(False, f"matches your {rules} rules", rules)
     reason = deny_reason(command)
     if reason:
-        return Verdict(False, f"deny-list: {reason}")
+        return Verdict(False, f"deny-list: {reason}", rules)
     try:
         assessment = judge.assess(command, str(cwd), workspace_dirs(cwd, project_dir), deadline)
     except JudgeError as e:
-        return Verdict(False, f"no verdict ({e})")
-    return judge_verdict(assessment, config)
+        return Verdict(False, f"no verdict ({e})", rules)
+    return judge_verdict(assessment, config, rules)
 
 
 def render(verdict, mode):
     """Turn a verdict into hook output. Only auto mode ever emits a decision, and only 'allow'."""
-    if verdict is None or mode == "shadow":
+    if verdict is None or verdict.background or mode == "shadow":
         return None
     if mode == "explain":
         label = "would allow" if verdict.allow else "would ask"
@@ -255,19 +270,79 @@ def render(verdict, mode):
     return {"systemMessage": f"jev-gate: asking: {verdict.reason}"}
 
 
+def record(event, verdict, config, judge, observed):
+    """Log one decision. Logging must never change a decision, so errors are swallowed."""
+    try:
+        command = event["tool_input"]["command"]
+        terms = getattr(judge, "terms", ())
+        a = verdict.assessment
+        journal.append({
+            "session_id": event.get("session_id"),
+            "tool_use_id": event.get("tool_use_id"),
+            "permission_mode": event.get("permission_mode"),
+            "mode": config.mode,
+            "observed": observed,
+            "rules": verdict.rules,
+            "decision": "allow" if verdict.allow else "ask",
+            "reason": verdict.reason,
+            "command_sha256": hashlib.sha256(command.encode()).hexdigest(),
+            "command": redact(command, terms),
+            "cwd": redact(str(event.get("cwd") or ""), terms),
+            "model": a.model if a else None,
+            "probabilities": a.probabilities if a else None,
+            "latency_ms": round(a.latency_ms, 1) if a else None,
+            "tokens": [a.input_tokens, a.output_tokens] if a else None,
+            "cost_usd": a.cost_usd if a else None,
+        })
+    except Exception:
+        pass
+
+
+def spawn_observer(event):
+    """Hand the event to a detached copy of this script and return at once."""
+    import subprocess
+    child = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), "--observe"],
+                             stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                             start_new_session=True)
+    child.stdin.write(json.dumps(event).encode())
+    child.stdin.close()
+
+
 def run(event, config=None, judge=None, started=None):
     started = time.monotonic() if started is None else started
     config = config or Config.load()
     judge = judge or Judge.from_config(config.config_dir, config.model)
     verdict = evaluate(event, config, judge, started + config.budget_s)
+    if verdict is None:
+        return None
+    if verdict.background:
+        spawn_observer(event)
+        return None
+    record(event, verdict, config, judge, observed=False)
     return render(verdict, config.mode)
 
 
-def main():
+def observe(event, config=None, judge=None, started=None):
+    """The background pass: judge with the same budget, log, print nothing."""
+    started = time.monotonic() if started is None else started
+    config = config or Config.load()
+    judge = judge or Judge.from_config(config.config_dir, config.model)
+    verdict = evaluate(event, config, judge, started + config.budget_s, observing=True)
+    if verdict is not None:
+        record(event, verdict, config, judge, observed=True)
+
+
+def main(argv=None):
     started = time.monotonic()
+    observing = (sys.argv[1:] if argv is None else argv) == ["--observe"]
     try:
         event = json.loads(sys.stdin.read())
-        output = run(event, started=started) if isinstance(event, dict) else None
+        if not isinstance(event, dict):
+            return 0
+        if observing:
+            observe(event, started=started)
+            return 0
+        output = run(event, started=started)
         if output is not None:
             sys.stdout.write(json.dumps(output))
     except Exception:
